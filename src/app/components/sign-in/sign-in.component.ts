@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     .then(app => {
       const uiConfig = {
         signInOptions: [
-          firebase.auth.EmailAuthProvider.PROVIDER_ID
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID
         ],
         callbacks: {
           signInSuccessWithAuthResult: this
@@ -45,6 +45,6 @@ export class SignInComponent implements OnInit, OnDestroy {
   onSignInSuccessful(result: any) {
     console.log('Firebase UI result:', result);
     this.router.navigateByUrl('/dashboard');
-    return true;
+    return false;
   }
 }
