@@ -28,17 +28,10 @@ export class AuthService {
     })
   }
 
-  //Sign in with email/password
-  SignIn(email: string, password: string) {
-    return this.fireAuth.signInWithEmailAndPassword(email, password)
-    .then((result) => {
-      this.ngZone.run(() => {
-        this.router.navigate(['dashboard']);
-      });
-      this.SetUserData(this.userData);
-    }).catch((error) => {
-      window.alert(error.message);
-    })
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return (user !== null && user.emailVerified !== false) ? true : false;
   }
 
   /* Setting up user data when sign in with username/password,
