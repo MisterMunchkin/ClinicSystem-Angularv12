@@ -12,11 +12,13 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignInComponent
+    SignInComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

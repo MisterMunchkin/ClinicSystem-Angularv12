@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import * as firebaseui from 'firebaseui';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,7 +15,9 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService,
+    private ngZone: NgZone) {
 
   }
 
@@ -43,8 +46,10 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   onSignInSuccessful(result: any) {
-    console.log('Firebase UI result:', result);
-    this.router.navigateByUrl('/dashboard');
+    this.authService.OnSignInSuccessful(result.user);
+    this.ngZone.run(() => {
+      this.router.navigate(['/dashboard']);
+    });
     return false;
   }
 }
