@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ClinicSystem-Angularv12';
+  isMenuOpen: boolean = false;
+
+  onSidenavClick(): void {
+    this.isMenuOpen = false;
+  }
 }

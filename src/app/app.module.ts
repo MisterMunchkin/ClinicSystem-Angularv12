@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppUiModule } from './app-ui.module';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AppUiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
