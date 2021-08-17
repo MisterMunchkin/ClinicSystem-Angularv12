@@ -14,13 +14,14 @@ export class OnlyadminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean> {
 
-    const isAdmin =  await this.authService.IsAdmin();
+    const isAdmin =  await this.authService.isAdmin();
 
     if (!isAdmin) {
       alert('UnAuthorized');
+      return false;
+    } else {
+      return true;
     }
-
-    return isAdmin;
   }
 
 }

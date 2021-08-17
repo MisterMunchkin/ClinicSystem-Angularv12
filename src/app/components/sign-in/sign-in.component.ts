@@ -46,7 +46,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   onSignInSuccessful(result: any) {
-    this.authService.OnSignInSuccessful(result.user);
+    this.authService.onSignInSuccessful(result.user);
     this.ngZone.run(() => {
       this.router.navigate(['/dashboard']);
     });

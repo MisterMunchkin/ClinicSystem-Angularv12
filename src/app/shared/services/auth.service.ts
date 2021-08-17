@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { User, UserDocument } from '../models/user';
+import { User } from '../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { UserService } from '../services/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +17,8 @@ export class AuthService {
   };
 
   constructor(
-    private fireStore: AngularFirestore,
     private fireAuth: AngularFireAuth,
+    private userService: UserService,
     private router: Router
   ) {
     fireAuth.onAuthStateChanged(user => {
@@ -45,48 +44,26 @@ export class AuthService {
     return (Object.keys(user).length > 0) ? true : false;
   }
 
-  async IsAdmin(): Promise<boolean> {
+  isAdmin(): Promise<boolean> | undefined {
     const user: User = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const userSnapshot: Observable<UserDocument> = this.GetUserData(user.uid);
-    console.log(userSnapshot);
-    return (userSnapshot) ? true : false;
+    const userPromise = this.userService.getUserDocument(user.uid)?.toPromise();
+
+    return userPromise?.then(user => {
+      const data = user.data();
+      return (data && data.isAdmin) ? true : false;
+    });
   }
 
   // Sign out
-  SignOut() {
-    return this.fireAuth.signOut().then(() => {
+  async signOut() {
+    return await this.fireAuth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['sign-in']);
     })
   }
 
-  OnSignInSuccessful(user: User): void {
-    this.SetUserData(user);
-  }
-
-  GetUserData(uid: string) {
-    const userRef: AngularFirestoreDocument<UserDocument> = this.fireStore.doc(`users/${uid}`);
-
-    const user = userRef.valueChanges();
-
-    return user;
-  }
-
-  /* Setting up user data when sign in with username/password,
-  sign up with username/password and sign in with social auth
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: User) {
-    const userRef: AngularFirestoreDocument<any> = this.fireStore.doc(`users/${user.uid}`);
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified
-    }
-    return userRef.set(userData, {
-      merge: true
-    })
+  onSignInSuccessful(user: User): void {
+    this.userService.setUserDocument(user);
   }
 }

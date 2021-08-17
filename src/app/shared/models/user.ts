@@ -12,5 +12,6 @@ export interface UserDocument {
   displayName?: string;
   photoURL: string;
   emailVerified: boolean;
-  role: string;
+  isAdmin: boolean;
+  isDoctor: boolean;
 }
