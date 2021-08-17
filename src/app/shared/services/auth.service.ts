@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { User } from './user';
+import { User, UserDocument } from '../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import firebase from 'firebase';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class AuthService {
     private fireAuth: AngularFireAuth,
     private router: Router
   ) {
-    firebase.auth().onAuthStateChanged(user => {
+    fireAuth.onAuthStateChanged(user => {
       if (user) {
         this.userData.uid = user.uid;
         this.userData.email = user.email || '';
@@ -45,6 +45,14 @@ export class AuthService {
     return (Object.keys(user).length > 0) ? true : false;
   }
 
+  async IsAdmin(): Promise<boolean> {
+    const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const userSnapshot: Observable<UserDocument> = this.GetUserData(user.uid);
+    console.log(userSnapshot);
+    return (userSnapshot) ? true : false;
+  }
+
   // Sign out
   SignOut() {
     return this.fireAuth.signOut().then(() => {
@@ -55,6 +63,14 @@ export class AuthService {
 
   OnSignInSuccessful(user: User): void {
     this.SetUserData(user);
+  }
+
+  GetUserData(uid: string) {
+    const userRef: AngularFirestoreDocument<UserDocument> = this.fireStore.doc(`users/${uid}`);
+
+    const user = userRef.valueChanges();
+
+    return user;
   }
 
   /* Setting up user data when sign in with username/password,
