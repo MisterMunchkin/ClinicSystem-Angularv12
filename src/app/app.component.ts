@@ -18,6 +18,6 @@ export class AppComponent {
   }
 
   async onLogoutClick(): Promise<void> {
-    await this.authService.SignOut();
+    await this.authService.signOut();
   }
 }
