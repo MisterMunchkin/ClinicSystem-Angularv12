@@ -55,6 +55,17 @@ export class AuthService {
     });
   }
 
+  isDoctor(): Promise<boolean> | undefined {
+    const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const userPromise = this.userService.getUserDocument(user.uid)?.get()?.toPromise();
+
+    return userPromise?.then(user => {
+      const data = user.data();
+      return (data && data.isDoctor) ? true : false;
+    });
+  }
+
   // Sign out
   async signOut() {
     return await this.fireAuth.signOut().then(() => {

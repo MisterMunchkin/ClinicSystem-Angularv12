@@ -14,13 +14,15 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersComponent } from './components/users/users.component';
+import { PatientsComponent } from './components/patients/patients.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    PatientsComponent
   ],
   imports: [
     BrowserModule,
