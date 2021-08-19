@@ -47,7 +47,7 @@ export class AuthService {
   isAdmin(): Promise<boolean> | undefined {
     const user: User = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const userPromise = this.userService.getUserDocument(user.uid)?.toPromise();
+    const userPromise = this.userService.getUserDocument(user.uid)?.get()?.toPromise();
 
     return userPromise?.then(user => {
       const data = user.data();
