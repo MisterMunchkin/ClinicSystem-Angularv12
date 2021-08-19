@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { UserDocument, User } from '../../models/user';
 
 @Injectable({
@@ -11,8 +10,14 @@ export class UserService {
     private fireStore: AngularFirestore
   ) { }
 
+  getUserCollections(): AngularFirestoreCollection<UserDocument> {
+    const userCollections: AngularFirestoreCollection<UserDocument> = this.fireStore.collection(`users`);
+
+    return userCollections;
+  }
+
   getUserDocument(uid: string) {
-    const userDoc = this.fireStore.doc<UserDocument>(`users/${uid}`).get();
+    const userDoc: AngularFirestoreDocument<UserDocument> = this.fireStore.doc(`users/${uid}`);
 
     if (userDoc) {
       return userDoc;
