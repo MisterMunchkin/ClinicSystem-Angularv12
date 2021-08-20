@@ -46,3 +46,10 @@ body .push-right{margin-right:10px;}
 html, body{height:100%;}
 body{margin:0;font-family:Roboto, "Helvetica Neue", sans-serif;}
 
+.photo{
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+  padding: 10px;
+}
+

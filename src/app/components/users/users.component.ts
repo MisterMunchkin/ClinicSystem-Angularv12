@@ -1,6 +1,4 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { UsersDataSource } from './users-datasource';
 import { UserDocument } from '../../shared/models/user';
@@ -19,7 +17,7 @@ export class UsersComponent implements AfterViewInit {
   isLoading$: boolean = false;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['email', 'displayName', 'role'];
+  displayedColumns = ['photo', 'email', 'displayName', 'role'];
 
   constructor(private userService: UserService) {}
 
@@ -29,7 +27,6 @@ export class UsersComponent implements AfterViewInit {
 
     this.isLoading$ = true
     this.userService.getUserCollections()
-    .valueChanges()
     .subscribe(
     data => {
       this.table.dataSource = new UsersDataSource(data);
