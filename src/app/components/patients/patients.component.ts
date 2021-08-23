@@ -1,4 +1,6 @@
+import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { MonthsDB } from 'src/app/shared/data/months';
 import { Birthdate, Patient } from 'src/app/shared/models/patient';
@@ -15,11 +17,13 @@ export class PatientsComponent implements AfterViewInit {
   dataSource: PatientsDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'gender', 'birthdate', 'civilStatus'];
+  displayedColumns = ['name', 'gender', 'birthdate', 'civilStatus', 'actions'];
   //displayedColumns = ['id', 'name'];
   isLoading$: boolean;
 
-  constructor(private patientService: PatientService) {}
+  constructor(
+    private patientService: PatientService,
+    private dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
     this.isLoading$ = true;
@@ -48,5 +52,16 @@ export class PatientsComponent implements AfterViewInit {
     const monthName = MonthsDB.monthNames[birthdate.month - 1];
 
     return monthName + ' ' + birthdate.day + ', ' + birthdate.year;
+  }
+
+  editPatientDialog(patient: Patient) {
+    const dialogRef = this.dialog.open(PatientFormDialogComponent, {
+      data: patient
+    });
+
+    dialogRef.afterClosed()
+    .subscribe(result => {
+      console.log(result);
+    });
   }
 }
