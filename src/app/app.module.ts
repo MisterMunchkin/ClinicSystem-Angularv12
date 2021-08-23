@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersComponent } from './components/users/users.component';
 import { PatientsComponent } from './components/patients/patients.component';
+import { PatientFormDialogComponent } from './components/patients/patient-form-dialog/patient-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PatientsComponent } from './components/patients/patients.component';
     SignInComponent,
     DashboardComponent,
     UsersComponent,
-    PatientsComponent
+    PatientsComponent,
+    PatientFormDialogComponent
   ],
   imports: [
     BrowserModule,

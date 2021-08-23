@@ -6,7 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 const uiModules = [
   MatSidenavModule,
@@ -15,7 +15,8 @@ const uiModules = [
   MatProgressSpinnerModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatDialogModule
 ];
 
 @NgModule({
