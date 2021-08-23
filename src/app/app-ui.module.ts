@@ -7,6 +7,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const uiModules = [
   MatSidenavModule,
@@ -16,7 +18,9 @@ const uiModules = [
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatDialogModule
+  MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule
 ];
 
 @NgModule({

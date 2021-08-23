@@ -29,23 +29,12 @@ export class PatientsComponent implements AfterViewInit {
     this.isLoading$ = true;
     this.patientService.getPatientCollections()
     .subscribe(data => {
-      console.log(data);
       this.table.dataSource = new PatientsDataSource(data);
       this.isLoading$ = false;
     }, error => {
       this.isLoading$ = false;
       console.log(error);
     })
-  }
-
-  getGenderString(gender: string): string {
-    if (gender === 'M') {
-      return 'Male';
-    } else if (gender === 'F') {
-      return 'Female';
-    } else {
-      return 'Others';
-    }
   }
 
   getBirthdateString(birthdate: Birthdate): string {
@@ -56,7 +45,9 @@ export class PatientsComponent implements AfterViewInit {
 
   editPatientDialog(patient: Patient) {
     const dialogRef = this.dialog.open(PatientFormDialogComponent, {
-      data: patient
+      data: patient,
+      height: '500px',
+      width: '1000px'
     });
 
     dialogRef.afterClosed()
