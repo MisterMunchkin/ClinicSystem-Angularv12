@@ -1,1 +1,59 @@
-<p>patient-form-dialog works!</p>
+<h1 mat-dialog-content>Patient Information</h1>
+<div mat-dialog-content fxLayout="row">
+  <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput id="firstName" type="text" formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Middle name</mat-label>
+        <input matInput id="middleName" type="text" formControlName="middleName">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-inline-padding">
+        <mat-label>Last name</mat-label>
+        <input matInput id="lastName" type="text" formControlName="lastName">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="birthdate">
+        <mat-label>Birth Month</mat-label>
+        <input matInput id="birthMonth" type="number" formControlName="birthMonth">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="birthdate">
+        <mat-label>Birth Day</mat-label>
+        <input matInput id="birthDay" type="number" formControlName="birthDay">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="birthdate form-inline-padding">
+        <mat-label>Birth Year</mat-label>
+        <input matInput id="birthYear" type="number" formControlName="birthYear">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="address form-inline-padding">
+        <mat-label for="address">Address</mat-label>
+        <input matInput id="address" type="text" formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="medium-width form-inline-padding">
+        <mat-label>Civil Status</mat-label>
+        <mat-select formControlName="civilStatus">
+          <mat-option *ngFor="let civilStatus of civilStatusNames" [value]="civilStatus">{{civilStatus}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="medium-width">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option *ngFor="let gender of genderNames" [value]="gender">{{gender}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    Add patient history setup down here. Maybe create a new component for this so we can compartmentalize.
+    Also choose whether we should use FormControl or TemplateControl. probably TemplateControl (ngModel) so
+    we can run a forloop onto the directive and pass each patient history. We can find a way to bind them.
+  </form>
+</div>
