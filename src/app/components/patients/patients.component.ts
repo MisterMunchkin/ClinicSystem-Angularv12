@@ -46,7 +46,6 @@ export class PatientsComponent implements AfterViewInit {
   editPatientDialog(patient: Patient) {
     const dialogRef = this.dialog.open(PatientFormDialogComponent, {
       data: patient,
-      height: '60%',
       width: '90%'
     });
 

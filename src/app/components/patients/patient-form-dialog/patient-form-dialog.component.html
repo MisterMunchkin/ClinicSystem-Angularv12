@@ -1,4 +1,4 @@
-<div class="fixActionRow">
+<div>
   <h1 mat-dialog-title>Patient Information</h1>
   <div mat-dialog-content fxLayout="row">
     <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
@@ -56,7 +56,6 @@
 
     <app-patient-history [patientHistoryCollection]="patientHistoryCollection"></app-patient-history>
   </div>
-  <div class="spacer"></div>
   <div mat-dialog-actions align="end">
     <button color="primary" mat-raised-button>Save</button>
     <button mat-raised-button [mat-dialog-close]>Close</button>
