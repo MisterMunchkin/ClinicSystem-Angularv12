@@ -1,4 +1,7 @@
-<h1>Patient History {{patientHistoryCollection.length}} visit(s)</h1>
+<div class="inline">
+  <h1 style="padding-right: 15px;">Patient History {{patientHistoryCollection.length}} visit(s)</h1>
+  <button mat-raised-button color="primary">Add Patient Visit</button>
+</div>
 <mat-card [class.mat-elevation-z8]="true" *ngFor="let patientHistory of patientHistoryCollection">
   <mat-card-header>
     <mat-card-title>{{patientHistory.diagnosis}}</mat-card-title>
