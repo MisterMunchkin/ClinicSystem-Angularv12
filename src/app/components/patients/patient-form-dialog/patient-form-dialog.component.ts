@@ -2,7 +2,7 @@ import { GenderDB } from './../../../shared/data/gender';
 import { CivilStatusDB } from './../../../shared/data/civil-status';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Patient, Birthdate } from 'src/app/shared/models/patient';
+import { Patient, PatientHistory } from 'src/app/shared/models/patient';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,6 +14,7 @@ export class PatientFormDialogComponent {
   patientForm: FormGroup;
   civilStatusNames: string[] = CivilStatusDB.civilStatusNames;
   genderNames: string[] = GenderDB.genderNames;
+  patientHistoryCollection: PatientHistory[];
 
   constructor(
   public dialogRef: MatDialogRef<PatientFormDialogComponent>,
@@ -34,6 +35,8 @@ export class PatientFormDialogComponent {
       lastName: data.lastName,
       middleName: data.middleName
     });
+
+    this.patientHistoryCollection = data.patientHistory ?? [];
   }
 
   onSubmit() {
