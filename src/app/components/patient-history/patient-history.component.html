@@ -1,0 +1,13 @@
+<h1>Patient History {{patientHistoryCollection.length}} visit(s)</h1>
+<mat-card [class.mat-elevation-z8]="true" *ngFor="let patientHistory of patientHistoryCollection">
+  <mat-card-header>
+    <mat-card-title>{{patientHistory.diagnosis}}</mat-card-title>
+    <mat-card-subtitle>{{patientHistory.dateOfVisit | date: 'full'}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button>Edit</button>
+  </mat-card-actions>
+</mat-card>
