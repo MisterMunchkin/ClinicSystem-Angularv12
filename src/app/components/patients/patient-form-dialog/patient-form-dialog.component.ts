@@ -3,7 +3,7 @@ import { CivilStatusDB } from './../../../shared/data/civil-status';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Patient, PatientHistory } from 'src/app/shared/models/patient';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-patient-form-dialog',
@@ -16,13 +16,14 @@ export class PatientFormDialogComponent {
   genderNames: string[] = GenderDB.genderNames;
   patientHistoryCollection: PatientHistory[];
 
+  patientData: Patient;
+
   constructor(
   public dialogRef: MatDialogRef<PatientFormDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: Patient,
   private formBuilder: FormBuilder) {
     console.log(data);
-
-
+    this.patientData = JSON.parse(JSON.stringify(data));
 
     this.patientForm = this.formBuilder.group({
       address: data.address,
@@ -40,6 +41,18 @@ export class PatientFormDialogComponent {
   }
 
   onSubmit() {
-    console.log();
+    let formGroupValues = this.patientForm.value;
+
+    this.patientData.address = formGroupValues.address;
+    this.patientData.birthDate.day = formGroupValues.birthDay;
+    this.patientData.birthDate.month = formGroupValues.birthMonth;
+    this.patientData.birthDate.year = formGroupValues.birthYear;
+    this.patientData.civilStatus = formGroupValues.civilStatus;
+    this.patientData.firstName = formGroupValues.firstName;
+    this.patientData.gender = formGroupValues.gender;
+    this.patientData.lastName = formGroupValues.lastName;
+    this.patientData.middleName = formGroupValues.middleName;
+
+    console.log(this.patientData);
   }
 }
