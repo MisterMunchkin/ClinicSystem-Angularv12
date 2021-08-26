@@ -21,6 +21,7 @@ import { UsersComponent } from './components/users/users.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { PatientFormDialogComponent } from './components/patients/patient-form-dialog/patient-form-dialog.component';
 import { PatientHistoryComponent } from './components/patient-history/patient-history.component';
+import { PatientHistoryFormDialogComponent } from './components/patient-history/patient-history-form-dialog/patient-history-form-dialog.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { PatientHistoryComponent } from './components/patient-history/patient-hi
     UsersComponent,
     PatientsComponent,
     PatientFormDialogComponent,
-    PatientHistoryComponent
+    PatientHistoryComponent,
+    PatientHistoryFormDialogComponent
   ],
   imports: [
     BrowserModule,
