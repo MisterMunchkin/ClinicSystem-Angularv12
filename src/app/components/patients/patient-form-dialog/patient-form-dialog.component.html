@@ -1,7 +1,7 @@
 <div>
-  <h1 mat-dialog-title>Patient Information</h1>
-  <div mat-dialog-content fxLayout="row">
-    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+    <h1 mat-dialog-title>Patient Information</h1>
+    <div mat-dialog-content fxLayout="row">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>First name</mat-label>
@@ -52,14 +52,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </form>
-
-    <app-patient-history [patientHistoryCollection]="patientHistoryCollection"></app-patient-history>
-  </div>
-  <div mat-dialog-actions align="end">
-    <button color="primary" mat-raised-button>Save</button>
-    <button mat-raised-button [mat-dialog-close]>Close</button>
-  </div>
+      <app-patient-history [patientHistoryCollection]="patientHistoryCollection"></app-patient-history>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button color="primary" mat-raised-button type="submit">Save</button>
+      <button mat-raised-button [mat-dialog-close] type="button">Close</button>
+    </div>
+  </form>
 </div>
 <!-- Add patient history setup down here. Maybe create a new component for this so we can compartmentalize.
 Also choose whether we should use FormControl or TemplateControl. probably TemplateControl (ngModel) so
