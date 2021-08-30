@@ -13,6 +13,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
   patientHistoryForm: FormGroup;
   patientHistoryData: PatientHistory;
   dateOfVisit: string;
+  isEdit: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<PatientHistoryFormDialogComponent>,
@@ -36,6 +37,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
         })
       });
+      this.isEdit = true;
     } else {
       //has no data for add
       this.patientHistoryForm = new FormGroup({
@@ -50,10 +52,38 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl('')
         })
       });
+      this.isEdit = false;
     }
   }
 
   onSubmit() {
-    console.log(this.patientHistoryForm);
+    if (this.patientHistoryForm.valid) {
+      let formGroupValues: PatientHistory = this.patientHistoryForm.value;
+
+      this.patientHistoryData.age = formGroupValues.age;
+
+      //These properties are uneditable. Only populated during add
+      if (!this.isEdit) {
+        this.patientHistoryData.dateOfVisit = new Date().toLocaleDateString();
+        this.patientHistoryData.attendingPhysician.displayName = localStorage.getItem('displayName') ?? '';
+        this.patientHistoryData.attendingPhysician.uid = localStorage.getItem('uid') ?? '';
+      }
+
+      this.patientHistoryData.diagnosis = formGroupValues.diagnosis;
+      this.patientHistoryData.remarks = formGroupValues.remarks;
+      this.patientHistoryData.symptoms = formGroupValues.symptoms
+      this.patientHistoryData.vitalSigns = {
+        bloodPressure: formGroupValues.vitalSigns?.bloodPressure,
+        pulseRate: formGroupValues.vitalSigns?.pulseRate,
+        respirationRate: formGroupValues.vitalSigns?.respirationRate,
+        temperature: formGroupValues.vitalSigns?.temperature
+      }
+
+      console.log(this.patientHistoryForm);
+      console.log(this.patientHistoryData);
+
+      let result = JSON.parse(JSON.stringify(this.patientHistoryData));
+      this.dialogRef.close(result);
+    }
   }
 }

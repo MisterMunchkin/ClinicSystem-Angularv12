@@ -34,8 +34,8 @@ export interface AttendingPhysician {
 }
 
 export interface VitalSigns {
-  bloodPressure: number;
-  pulseRate: number;
-  respirationRate: number;
-  temperature: number;
+  bloodPressure?: string;
+  pulseRate?: string;
+  respirationRate?: string;
+  temperature?: string;
 }
