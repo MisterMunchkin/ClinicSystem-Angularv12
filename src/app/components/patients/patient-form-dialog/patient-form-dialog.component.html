@@ -6,25 +6,16 @@
         <span *ngIf="patientForm.errors?.forbiddenDay.value != null">
           Birth Day is invalid - {{patientForm.errors?.forbiddenDay.value}} is not a valid day
         </span>
-        <!-- <span *ngIf="patientForm.errors?.forbiddenDay.value == null">
-          Birth Day is required
-        </span> -->
       </div>
       <div *ngIf="patientForm.errors?.forbiddenMonth">
         <span *ngIf="patientForm.errors?.forbiddenMonth.value != null">
           Birth Month is invalid - {{patientForm.errors?.forbiddenMonth.value}} is not a valid month
         </span>
-        <!-- <span *ngIf="patientForm.errors?.forbiddenMonth.value == null">
-          Birth Month is required
-        </span> -->
       </div>
       <div *ngIf="patientForm.errors?.forbiddenYear">
         <span *ngIf="patientForm.errors?.forbiddenYear.value != null">
           Birth Year is invalid - {{patientForm.errors?.forbiddenYear.value}} is not a valid eyar
         </span>
-        <!-- <span *ngIf="patientForm.errors?.forbiddenYear.value == null">
-          Birth Year is required
-        </span> -->
       </div>
    </div>
     <div mat-dialog-content fxLayout="row">
