@@ -1,1 +1,62 @@
-<p>patient-history-form-dialog works!</p>
+<div>
+  <form [formGroup]="patientHistoryForm" (ngSubmit)="onSubmit()">
+    <h1 mat-dialog-title>Patient Visit <span *ngIf="patientHistoryData != null">- {{patientHistoryData.dateOfVisit | date: 'full'}}</span></h1>
+    <div mat-dialog-content fxLayout="row">
+      <div>
+        <mat-form-field  class="form-inline-padding">
+          <mat-label>Age</mat-label>
+          <input matInput id="age" type="number" formControlName="age"/>
+        </mat-form-field>
+        <div formGroupName="vitalSigns" class="inline">
+          <mat-form-field class="number-field">
+            <mat-label>Blood Pressure</mat-label>
+            <input matInput id="bloodPressure" type="number" formControlName="bloodPressure" />
+          </mat-form-field>
+          <mat-form-field class="number-field">
+            <mat-label>Pulse Rate</mat-label>
+            <input matInput id="pulseRate" type="number" formControlName="pulseRate" />
+          </mat-form-field>
+          <mat-form-field class="number-field">
+            <mat-label>Respiration Rate</mat-label>
+            <input matInput id="respirationRate" type="number" formControlName="respirationRate" />
+          </mat-form-field>
+          <mat-form-field class="number-field">
+            <mat-label>Temperature</mat-label>
+            <input matInput id="temperature" type="number" formControlName="temperature" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="wide-field">
+            <mat-label>Diagnosis</mat-label>
+            <textarea matInput id="diagnosis" formControlName="diagnosis"
+                      cdkTextareaAutosize
+                      cdkAutosizeMaxRows="6"
+                      cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="wide-field">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput id="remarks" formControlName="remarks"
+                      cdkTextareaAutosize
+                      cdkAutosizeMaxRows="6"
+                      cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="wide-field">
+            <mat-label>Symptoms</mat-label>
+            <textarea matInput id="symptoms" formControlName="symptoms"
+                      cdkTextareaAutosize
+                      cdkAutosizeMaxRows="6"
+                      cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button color="primary" mat-raised-button type="submit">Save</button>
+      <button mat-raised-button [mat-dialog-close] type="button">Close</button>
+    </div>
+  </form>
+</div>

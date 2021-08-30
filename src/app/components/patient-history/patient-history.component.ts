@@ -19,9 +19,9 @@ export class PatientHistoryComponent implements OnInit {
     //console.log(this.patientHistory.dateOfVisit.toDateString());
   }
 
-  addPatientVisit() {
+  addPatientHistory() {
     const dialogRef = this.dialog.open(PatientHistoryFormDialogComponent, {
-      width: '60%'
+
     });
 
     dialogRef.afterClosed()
@@ -33,10 +33,10 @@ export class PatientHistoryComponent implements OnInit {
     });
   }
 
-  editPatientVisit(patientHistory: PatientHistory) {
+  editPatientHistory(patientHistory: PatientHistory) {
     const dialogRef = this.dialog.open(PatientHistoryFormDialogComponent, {
       data: patientHistory,
-      width: '60%'
+
     });
 
     dialogRef.afterClosed()

@@ -1,6 +1,6 @@
 <div class="inline">
   <h1 style="padding-right: 15px;">Patient History {{patientHistoryCollection.length}} visit(s)</h1>
-  <button mat-raised-button color="primary" (click)="addPatientVisit()">Add Patient Visit</button>
+  <button mat-raised-button color="primary" (click)="addPatientHistory()">Add Patient Visit</button>
 </div>
 <mat-card [class.mat-elevation-z8]="true" *ngFor="let patientHistory of patientHistoryCollection">
   <mat-card-header>
@@ -11,6 +11,6 @@
 
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-raised-button (click)="editPatientVisit(patientHistory)">Edit</button>
+    <button mat-raised-button (click)="editPatientHistory(patientHistory)">Edit</button>
   </mat-card-actions>
 </mat-card>
