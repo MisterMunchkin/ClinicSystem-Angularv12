@@ -96,3 +96,11 @@ body{margin:0;font-family:Roboto, "Helvetica Neue", sans-serif;}
   background: #ffe0e0;
   border: 1px solid #a33a3a;
 }
+
+.number-field {
+  width: 100px !important;
+}
+
+.wide-field {
+  width: 600px !important;
+}

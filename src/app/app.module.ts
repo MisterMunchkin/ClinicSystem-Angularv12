@@ -22,6 +22,7 @@ import { PatientsComponent } from './components/patients/patients.component';
 import { PatientFormDialogComponent } from './components/patients/patient-form-dialog/patient-form-dialog.component';
 import { PatientHistoryComponent } from './components/patient-history/patient-history.component';
 import { PatientHistoryFormDialogComponent } from './components/patient-history/patient-history-form-dialog/patient-history-form-dialog.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -46,7 +47,9 @@ import { PatientHistoryFormDialogComponent } from './components/patient-history/
     MatSelectModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' }}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
