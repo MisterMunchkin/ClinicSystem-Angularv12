@@ -1,9 +1,9 @@
 <div>
   <form [formGroup]="patientHistoryForm" (ngSubmit)="onSubmit()">
-    <h1 mat-dialog-title>Patient Visit <span *ngIf="patientHistoryData != null">- {{patientHistoryData.dateOfVisit | date: 'full'}}</span></h1>
+    <h1 mat-dialog-title>Patient Visit <span *ngIf="patientHistoryData != null">- {{patientHistoryData.dateOfVisit | date: 'fullDate'}}</span></h1>
     <div mat-dialog-content fxLayout="row">
       <div>
-        <mat-form-field  class="form-inline-padding">
+        <mat-form-field  class="form-inline-padding small-field">
           <mat-label>Age</mat-label>
           <input matInput id="age" type="number" formControlName="age"/>
         </mat-form-field>
@@ -36,8 +36,8 @@
         </div>
         <div>
           <mat-form-field class="wide-field">
-            <mat-label>Remarks</mat-label>
-            <textarea matInput id="remarks" formControlName="remarks"
+            <mat-label>Symptoms</mat-label>
+            <textarea matInput id="symptoms" formControlName="symptoms"
                       cdkTextareaAutosize
                       cdkAutosizeMaxRows="6"
                       cdkAutosizeMinRows="2"></textarea>
@@ -45,8 +45,8 @@
         </div>
         <div>
           <mat-form-field class="wide-field">
-            <mat-label>Symptoms</mat-label>
-            <textarea matInput id="symptoms" formControlName="symptoms"
+            <mat-label>Remarks</mat-label>
+            <textarea matInput id="remarks" formControlName="remarks"
                       cdkTextareaAutosize
                       cdkAutosizeMaxRows="6"
                       cdkAutosizeMinRows="2"></textarea>

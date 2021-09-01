@@ -1,4 +1,5 @@
-import { VitalSigns } from './../../../shared/models/patient';
+import { User } from './../../../shared/models/user';
+import { VitalSigns, AttendingPhysician } from './../../../shared/models/patient';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -15,21 +16,50 @@ export class PatientHistoryFormDialogComponent implements OnInit {
   dateOfVisit: string;
   isEdit: boolean;
 
+  cleanDataForm: PatientHistory = {
+    age: '',
+    attendingPhysician: {
+      displayName: '',
+      uid: ''
+    },
+    dateOfVisit: new Date().toLocaleDateString(),
+    diagnosis: '',
+    remarks: '',
+    symptoms: '',
+    vitalSigns: {
+      bloodPressure: '',
+      pulseRate: '',
+      respirationRate: '',
+      temperature: ''
+    }
+  };
+
   constructor(
     public dialogRef: MatDialogRef<PatientHistoryFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PatientHistory
   ) {
-    this.patientHistoryData = JSON.parse(JSON.stringify(data));
+    if (data) {
+      this.patientHistoryData = JSON.parse(JSON.stringify(data));
+      this.isEdit = true;
+    } else {
+      this.patientHistoryData = this.cleanDataForm;
+      var user: User = JSON.parse(localStorage.getItem('user') ?? '');
+      this.patientHistoryData.attendingPhysician = {
+        uid: user.uid,
+        displayName: user.displayName ?? ''
+      }
+      this.isEdit = false;
+    }
   }
 
   ngOnInit(): void {
-    if (this.patientHistoryData) {
+    if (this.isEdit) {
       //has data for edit
       this.patientHistoryForm = new FormGroup({
-        age: new FormControl(this.patientHistoryData.age, [Validators.required]),
-        diagnosis: new FormControl(this.patientHistoryData.diagnosis),
+        age: new FormControl(this.patientHistoryData.age),
+        diagnosis: new FormControl(this.patientHistoryData.diagnosis, [Validators.required]),
         remarks: new FormControl(this.patientHistoryData.remarks),
-        symptoms: new FormControl(this.patientHistoryData.symptoms),
+        symptoms: new FormControl(this.patientHistoryData.symptoms, [Validators.required]),
         vitalSigns: new FormGroup({
           bloodPressure: new FormControl(this.patientHistoryData.vitalSigns?.bloodPressure),
           pulseRate: new FormControl(this.patientHistoryData.vitalSigns?.pulseRate),
@@ -37,14 +67,13 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
         })
       });
-      this.isEdit = true;
     } else {
       //has no data for add
       this.patientHistoryForm = new FormGroup({
         age: new FormControl('', [Validators.required]),
-        diagnosis: new FormControl(''),
+        diagnosis: new FormControl('', [Validators.required]),
         remarks: new FormControl(''),
-        symptoms: new FormControl(''),
+        symptoms: new FormControl('', [Validators.required]),
         vitalSigns: new FormGroup({
           bloodPressure: new FormControl(''),
           pulseRate: new FormControl(''),
@@ -52,7 +81,6 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl('')
         })
       });
-      this.isEdit = false;
     }
   }
 
@@ -60,14 +88,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
     if (this.patientHistoryForm.valid) {
       let formGroupValues: PatientHistory = this.patientHistoryForm.value;
 
-      this.patientHistoryData.age = formGroupValues.age;
-
-      //These properties are uneditable. Only populated during add
-      if (!this.isEdit) {
-        this.patientHistoryData.dateOfVisit = new Date().toLocaleDateString();
-        this.patientHistoryData.attendingPhysician.displayName = localStorage.getItem('displayName') ?? '';
-        this.patientHistoryData.attendingPhysician.uid = localStorage.getItem('uid') ?? '';
-      }
+      this.patientHistoryData.age = formGroupValues.age?.toString();
 
       this.patientHistoryData.diagnosis = formGroupValues.diagnosis;
       this.patientHistoryData.remarks = formGroupValues.remarks;
@@ -78,9 +99,6 @@ export class PatientHistoryFormDialogComponent implements OnInit {
         respirationRate: formGroupValues.vitalSigns?.respirationRate,
         temperature: formGroupValues.vitalSigns?.temperature
       }
-
-      console.log(this.patientHistoryForm);
-      console.log(this.patientHistoryData);
 
       let result = JSON.parse(JSON.stringify(this.patientHistoryData));
       this.dialogRef.close(result);

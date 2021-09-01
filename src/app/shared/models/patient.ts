@@ -1,5 +1,3 @@
-import { Timestamp } from "rxjs/internal/operators/timestamp";
-
 export interface Patient {
   documentId: string;
   address: string;
@@ -13,12 +11,12 @@ export interface Patient {
 }
 
 export interface PatientHistory {
-  age: number;
+  age: string;
   attendingPhysician: AttendingPhysician;
   dateOfVisit: string;
-  diagnosis?: string;
+  diagnosis: string;
   remarks?: string;
-  symptoms?: string;
+  symptoms: string;
   vitalSigns?: VitalSigns;
 }
 
