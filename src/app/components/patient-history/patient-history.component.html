@@ -1,16 +1,18 @@
 <div class="inline">
   <h1 style="padding-right: 15px;">Patient History {{patientHistoryCollection.length}} visit(s)</h1>
-  <button mat-raised-button color="primary" (click)="addPatientHistory()">Add Patient Visit</button>
+  <button mat-raised-button color="primary" type="button" (click)="addPatientHistory()">Add Patient Visit</button>
 </div>
-<mat-card [class.mat-elevation-z8]="true" *ngFor="let patientHistory of patientHistoryCollection">
-  <mat-card-header>
-    <mat-card-title>{{patientHistory.diagnosis}}</mat-card-title>
-    <mat-card-subtitle>{{patientHistory.dateOfVisit | date: 'full'}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-raised-button (click)="editPatientHistory(patientHistory)">Edit</button>
-  </mat-card-actions>
-</mat-card>
+<div class="mat-card-padding" *ngFor="let patientHistory of patientHistoryCollection; let i = index;">
+  <mat-card [class.mat-elevation-z8]="true">
+    <mat-card-header>
+      <mat-card-title>Diagnosis: {{patientHistory.diagnosis}}</mat-card-title>
+      <mat-card-subtitle>{{patientHistory.dateOfVisit | date: 'fullDate'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><b>Symptoms</b>: {{patientHistory.symptoms}}</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button type="button" (click)="editPatientHistory(patientHistory, i)">Edit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

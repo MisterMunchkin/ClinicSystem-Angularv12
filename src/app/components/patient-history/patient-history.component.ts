@@ -1,5 +1,5 @@
-import { PatientHistory } from './../../shared/models/patient';
-import { Component, Input, OnInit } from '@angular/core';
+import { PatientHistory } from 'src/app/shared/models/patient';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PatientHistoryFormDialogComponent } from './patient-history-form-dialog/patient-history-form-dialog.component';
 
@@ -16,7 +16,6 @@ export class PatientHistoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //console.log(this.patientHistory.dateOfVisit.toDateString());
   }
 
   addPatientHistory() {
@@ -28,12 +27,12 @@ export class PatientHistoryComponent implements OnInit {
     .subscribe(result => {
       if (result) {
         //Add to the list
-        console.log(result);
+        this.patientHistoryCollection.unshift(result);
       }
     });
   }
 
-  editPatientHistory(patientHistory: PatientHistory) {
+  editPatientHistory(patientHistory: PatientHistory, index: number) {
     const dialogRef = this.dialog.open(PatientHistoryFormDialogComponent, {
       data: patientHistory,
 
@@ -43,7 +42,7 @@ export class PatientHistoryComponent implements OnInit {
     .subscribe(result => {
       if (result) {
         //Edit the one in the list
-        console.log(result);
+        this.patientHistoryCollection.splice(index, 1, result);
       }
     });
   }
