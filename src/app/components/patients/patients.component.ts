@@ -62,7 +62,6 @@ export class PatientsComponent implements AfterViewInit {
   editPatientDataService(patientData: Patient) {
     this.patientService.updatePatientDocument(patientData)
     .then(data => {
-      console.log(data);
       this.toastr.success('Changes have been saved!', 'Success', {
         tapToDismiss: true,
         easing: 'ease-in'
