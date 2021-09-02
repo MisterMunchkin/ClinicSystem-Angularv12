@@ -51,7 +51,18 @@ export class PatientsComponent implements AfterViewInit {
 
     dialogRef.afterClosed()
     .subscribe(result => {
-      console.log(result);
+      if (result) {
+        this.editPatientDataService(result);
+      }
+    });
+  }
+
+  editPatientDataService(patientData: Patient) {
+    this.patientService.updatePatientDocument(patientData)
+    .then(data => {
+      console.log(data);
+    }, error => {
+      console.log(error);
     });
   }
 }
