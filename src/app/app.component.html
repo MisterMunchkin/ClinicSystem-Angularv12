@@ -1,4 +1,11 @@
 <div class="page-container">
+
+  <!--  -->
+  <!-- https://loading.io/ -->
+  <div id="full-screen-loader" *ngIf="(onlydoctorGuard.loader) || (onlyadminGuard.loader)">
+    <img src="../assets/loader-1s-100px.gif" >
+  </div>
+
   <header>
     <div>
       <button mat-button class="menu-button" (click)="sidenav.toggle()">

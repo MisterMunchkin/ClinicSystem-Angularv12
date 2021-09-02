@@ -1,3 +1,5 @@
+import { OnlyadminGuard } from './shared/guard/onlyadmin/onlyadmin.guard';
+import { OnlydoctorGuard } from './shared/guard/onlydoctor/onlydoctor.guard';
 import { Component } from '@angular/core';
 import { AuthService } from '../app/shared/services/auth.service';
 
@@ -11,7 +13,9 @@ export class AppComponent {
   isMenuOpen: boolean = false;
 
   constructor(
-    private authService: AuthService) {}
+    private authService: AuthService,
+    public onlydoctorGuard: OnlydoctorGuard,
+    public onlyadminGuard: OnlyadminGuard) {}
 
   onSidenavClick(): void {
     this.isMenuOpen = false;

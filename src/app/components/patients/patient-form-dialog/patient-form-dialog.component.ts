@@ -3,8 +3,10 @@ import { CivilStatusDB } from './../../../shared/data/civil-status';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Patient, PatientHistory } from 'src/app/shared/models/patient';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { validatebirthDay, validatebirthMonth, validatebirthYear } from 'src/app/shared/validators/birthday-validator';
+import { PatientService } from 'src/app/shared/services/patient/patient.service';
+
 
 @Component({
   selector: 'app-patient-form-dialog',
@@ -22,7 +24,7 @@ export class PatientFormDialogComponent implements OnInit {
   constructor(
   public dialogRef: MatDialogRef<PatientFormDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: Patient,
-  private formBuilder: FormBuilder) {
+  private patientService: PatientService) {
     this.patientData = JSON.parse(JSON.stringify(data));
   }
 
@@ -56,6 +58,6 @@ export class PatientFormDialogComponent implements OnInit {
     this.patientData.middleName = formGroupValues.middleName;
 
     console.log(this.patientData);
-    console.log(this.patientForm);
+    this.dialogRef.close(this.patientData);
   }
 }
