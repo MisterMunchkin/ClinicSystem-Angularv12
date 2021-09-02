@@ -31,10 +31,39 @@ export class PatientsComponent implements AfterViewInit {
     this.isLoading$ = true;
     this.patientService.getPatientCollections()
     .subscribe(data => {
+      console.log(data);
       this.table.dataSource = new PatientsDataSource(data);
       this.isLoading$ = false;
     }, error => {
       this.isLoading$ = false;
+      console.log(error);
+    })
+  }
+
+  addPatientDialog() {
+    const dialogRef = this.dialog.open(PatientFormDialogComponent, {
+    });
+
+    dialogRef.afterClosed()
+    .subscribe(result => {
+      if (result) {
+        this.addPatientDataService(result);
+      }
+    });
+  }
+
+  addPatientDataService(patientData: Patient) {
+    this.patientService.addPatientDocument(patientData)
+    .then(data => {
+      this.toastr.success('New patient has been saved!', 'Success', {
+        tapToDismiss: true,
+        easing: 'ease-in'
+      });
+    }, error => {
+      this.toastr.error('Something went wrong', 'Error', {
+        tapToDismiss: true,
+        easing: 'ease-in'
+      });
       console.log(error);
     })
   }
@@ -47,8 +76,7 @@ export class PatientsComponent implements AfterViewInit {
 
   editPatientDialog(patient: Patient) {
     const dialogRef = this.dialog.open(PatientFormDialogComponent, {
-      data: patient,
-      width: '90%'
+      data: patient
     });
 
     dialogRef.afterClosed()

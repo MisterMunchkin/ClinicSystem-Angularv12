@@ -1,7 +1,7 @@
 import { Patient } from 'src/app/shared/models/patient';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,13 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 export class PatientService {
 
   constructor(private fireStore: AngularFirestore) { }
+
+  addPatientDocument(patientDocument: Patient): Promise<void> {
+    const patientRef: AngularFirestoreDocument<Patient> = this.fireStore.collection(`patients`).doc();
+
+    patientDocument.documentId = patientRef.ref.id;
+    return patientRef.set(patientDocument);
+  }
 
   //Gets real time updates of patient collection
   getPatientCollections(): Observable<Patient[]> {

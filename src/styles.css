@@ -121,3 +121,7 @@ body{margin:0;font-family:Roboto, "Helvetica Neue", sans-serif;}
   justify-content: space-between;
   padding: 0px !important;
 }
+
+.inline-block{
+  display: inline-block;
+}
