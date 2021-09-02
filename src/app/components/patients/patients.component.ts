@@ -6,6 +6,7 @@ import { MonthsDB } from 'src/app/shared/data/months';
 import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
 import { PatientsDataSource } from './patients-datasource';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-patients',
@@ -23,7 +24,8 @@ export class PatientsComponent implements AfterViewInit {
 
   constructor(
     private patientService: PatientService,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog,
+    private toastr: ToastrService) {}
 
   ngAfterViewInit(): void {
     this.isLoading$ = true;
@@ -61,7 +63,15 @@ export class PatientsComponent implements AfterViewInit {
     this.patientService.updatePatientDocument(patientData)
     .then(data => {
       console.log(data);
+      this.toastr.success('Changes have been saved!', 'Success', {
+        tapToDismiss: true,
+        easing: 'ease-in'
+      });
     }, error => {
+      this.toastr.error('Something went wrong', 'Error', {
+        tapToDismiss: true,
+        easing: 'ease-in'
+      });
       console.log(error);
     });
   }
