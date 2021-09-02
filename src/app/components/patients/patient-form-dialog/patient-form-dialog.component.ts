@@ -1,3 +1,4 @@
+import { Birthdate } from './../../../shared/models/patient';
 import { GenderDB } from './../../../shared/data/gender';
 import { CivilStatusDB } from './../../../shared/data/civil-status';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -20,12 +21,34 @@ export class PatientFormDialogComponent implements OnInit {
   patientHistoryCollection: PatientHistory[];
 
   patientData: Patient;
+  cleanDataForm: Patient = {
+    documentId: '',
+    address: '',
+    birthDate: {
+      day: 1,
+      month: 1,
+      year: 2000
+    },
+    civilStatus: '',
+    gender: '',
+    firstName: '',
+    lastName: '',
+    middleName: undefined,
+    patientHistory: []
+  }
+  isEdit: boolean = false;
 
   constructor(
   public dialogRef: MatDialogRef<PatientFormDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: Patient,
   private patientService: PatientService) {
-    this.patientData = JSON.parse(JSON.stringify(data));
+    if (data) {
+      this.patientData = JSON.parse(JSON.stringify(data));
+      this.isEdit = true;
+    } else {
+      this.patientData = this.cleanDataForm;
+      this.isEdit = false;
+    }
   }
 
   ngOnInit(){
@@ -45,19 +68,21 @@ export class PatientFormDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    let formGroupValues = this.patientForm.value;
+    if (this.patientForm.valid) {
+      let formGroupValues = this.patientForm.value;
 
-    this.patientData.address = formGroupValues.address;
-    this.patientData.birthDate.day = formGroupValues.birthDay;
-    this.patientData.birthDate.month = formGroupValues.birthMonth;
-    this.patientData.birthDate.year = formGroupValues.birthYear;
-    this.patientData.civilStatus = formGroupValues.civilStatus;
-    this.patientData.firstName = formGroupValues.firstName;
-    this.patientData.gender = formGroupValues.gender;
-    this.patientData.lastName = formGroupValues.lastName;
-    this.patientData.middleName = formGroupValues.middleName;
+      this.patientData.address = formGroupValues.address;
+      this.patientData.birthDate.day = formGroupValues.birthDay;
+      this.patientData.birthDate.month = formGroupValues.birthMonth;
+      this.patientData.birthDate.year = formGroupValues.birthYear;
+      this.patientData.civilStatus = formGroupValues.civilStatus;
+      this.patientData.firstName = formGroupValues.firstName;
+      this.patientData.gender = formGroupValues.gender;
+      this.patientData.lastName = formGroupValues.lastName;
+      this.patientData.middleName = formGroupValues.middleName;
 
-    console.log(this.patientData);
-    this.dialogRef.close(this.patientData);
+      console.log(this.patientData);
+      this.dialogRef.close(this.patientData);
+    }
   }
 }
