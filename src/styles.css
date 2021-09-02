@@ -115,3 +115,9 @@ body{margin:0;font-family:Roboto, "Helvetica Neue", sans-serif;}
   left: 50%;
   top: 50%;
 }
+
+
+.table-header{
+  justify-content: space-between;
+  padding: 0px !important;
+}
