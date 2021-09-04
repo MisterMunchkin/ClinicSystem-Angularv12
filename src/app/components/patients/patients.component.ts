@@ -1,7 +1,7 @@
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MonthsDB } from 'src/app/shared/data/months';
 import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
@@ -15,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PatientsComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<Patient>;
-  dataSource: PatientsDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'gender', 'birthdate', 'civilStatus', 'actions'];
@@ -32,7 +31,8 @@ export class PatientsComponent implements AfterViewInit {
     this.patientService.getPatientCollections()
     .subscribe(data => {
       console.log(data);
-      this.table.dataSource = new PatientsDataSource(data);
+      // let patientDataSource= new PatientsDataSource(data);
+      this.table.dataSource = new MatTableDataSource(data);
       this.isLoading$ = false;
     }, error => {
       this.isLoading$ = false;
