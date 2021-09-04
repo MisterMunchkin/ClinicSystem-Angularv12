@@ -31,7 +31,9 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       pulseRate: '',
       respirationRate: '',
       temperature: ''
-    }
+    },
+    treatmentPlan: '',
+    labResults: ''
   };
 
   constructor(
@@ -65,7 +67,9 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           pulseRate: new FormControl(this.patientHistoryData.vitalSigns?.pulseRate),
           respirationRate: new FormControl(this.patientHistoryData.vitalSigns?.respirationRate),
           temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
-        })
+        }),
+        labResults: new FormControl(this.patientHistoryData.labResults),
+        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan)
       });
     } else {
       //has no data for add
@@ -79,7 +83,9 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           pulseRate: new FormControl(''),
           respirationRate: new FormControl(''),
           temperature: new FormControl('')
-        })
+        }),
+        labResults: new FormControl(''),
+        treatmentPlan: new FormControl('')
       });
     }
   }
@@ -99,6 +105,8 @@ export class PatientHistoryFormDialogComponent implements OnInit {
         respirationRate: formGroupValues.vitalSigns?.respirationRate,
         temperature: formGroupValues.vitalSigns?.temperature
       }
+      this.patientHistoryData.labResults = formGroupValues.labResults;
+      this.patientHistoryData.treatmentPlan = formGroupValues.treatmentPlan;
 
       let result = JSON.parse(JSON.stringify(this.patientHistoryData));
       this.dialogRef.close(result);

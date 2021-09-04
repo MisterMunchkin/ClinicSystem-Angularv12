@@ -40,8 +40,7 @@ export class PatientFormDialogComponent implements OnInit {
 
   constructor(
   public dialogRef: MatDialogRef<PatientFormDialogComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: Patient,
-  private patientService: PatientService) {
+  @Inject(MAT_DIALOG_DATA) public data: Patient) {
     if (data) {
       this.patientData = JSON.parse(JSON.stringify(data));
       this.isEdit = true;
