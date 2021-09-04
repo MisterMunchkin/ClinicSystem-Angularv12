@@ -1,3 +1,4 @@
+import { AttendingPhysician } from './../../shared/models/patient';
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +8,7 @@ import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
 import { PatientsDataSource } from './patients-datasource';
 import { ToastrService } from 'ngx-toastr';
+import { MatTableFilter } from 'mat-table-filter';
 
 @Component({
   selector: 'app-patients',
@@ -21,6 +23,9 @@ export class PatientsComponent implements AfterViewInit {
   //displayedColumns = ['id', 'name'];
   isLoading$: boolean;
 
+  exampleObject: Patient;
+  filterType: MatTableFilter;
+
   constructor(
     private patientService: PatientService,
     private dialog: MatDialog,
@@ -32,6 +37,7 @@ export class PatientsComponent implements AfterViewInit {
     .subscribe(data => {
       console.log(data);
       // let patientDataSource= new PatientsDataSource(data);
+      this.filterType = MatTableFilter.ANYWHERE;
       this.table.dataSource = new MatTableDataSource(data);
       this.isLoading$ = false;
     }, error => {
