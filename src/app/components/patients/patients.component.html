@@ -1,9 +1,13 @@
+<h1>Patients</h1>
 <div class="inline table-header" style="width: 100%; overflow: auto;">
-  <h1>Patients</h1>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
   <button style="float: right;" mat-raised-button color="primary" (click)="addPatientDialog()">New Patient</button>
 </div>
 <div class="mat-elevation-z8">
-  <table mat-table matTableFilter class="full-width-table" matSort [exampleEntity]="exampleObject" [filterType]="filterType" aria-label="Patients">
+  <table mat-table class="full-width-table" matSort aria-label="Patients">
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>

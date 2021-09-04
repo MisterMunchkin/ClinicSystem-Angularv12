@@ -65,7 +65,7 @@ body{margin:0;font-family:Roboto, "Helvetica Neue", sans-serif;}
   display: inline-flex;
   padding: 15px;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   align-content: center;
   flex-wrap: nowrap;
 }
