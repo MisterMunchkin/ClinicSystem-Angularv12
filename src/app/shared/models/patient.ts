@@ -18,6 +18,8 @@ export interface PatientHistory {
   remarks?: string;
   symptoms: string;
   vitalSigns?: VitalSigns;
+  labResults?: string,
+  treatmentPlan?: string
 }
 
 export interface Birthdate {
