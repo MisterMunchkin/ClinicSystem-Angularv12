@@ -1,4 +1,3 @@
-import { AttendingPhysician } from './../../shared/models/patient';
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,9 +5,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MonthsDB } from 'src/app/shared/data/months';
 import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
-import { PatientsDataSource } from './patients-datasource';
 import { ToastrService } from 'ngx-toastr';
-import { MatTableFilter } from 'mat-table-filter';
 
 @Component({
   selector: 'app-patients',
@@ -20,11 +17,8 @@ export class PatientsComponent implements AfterViewInit {
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'gender', 'birthdate', 'civilStatus', 'actions'];
-  //displayedColumns = ['id', 'name'];
   isLoading$: boolean;
-
-  exampleObject: Patient;
-  filterType: MatTableFilter;
+  dataSource: MatTableDataSource<Patient>;
 
   constructor(
     private patientService: PatientService,
@@ -36,14 +30,18 @@ export class PatientsComponent implements AfterViewInit {
     this.patientService.getPatientCollections()
     .subscribe(data => {
       console.log(data);
-      // let patientDataSource= new PatientsDataSource(data);
-      this.filterType = MatTableFilter.ANYWHERE;
-      this.table.dataSource = new MatTableDataSource(data);
+      this.dataSource = new MatTableDataSource(data);
+      this.table.dataSource = this.dataSource;
       this.isLoading$ = false;
     }, error => {
       this.isLoading$ = false;
       console.log(error);
     })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
   }
 
   addPatientDialog() {
