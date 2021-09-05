@@ -33,7 +33,8 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       temperature: ''
     },
     treatmentPlan: '',
-    labResults: ''
+    labResults: '',
+    documents: ''
   };
 
   constructor(
@@ -69,7 +70,8 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
         }),
         labResults: new FormControl(this.patientHistoryData.labResults),
-        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan)
+        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan),
+        documents: new FormControl(this.patientHistoryData.documents)
       });
     } else {
       //has no data for add
@@ -85,9 +87,14 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl('')
         }),
         labResults: new FormControl(''),
-        treatmentPlan: new FormControl('')
+        treatmentPlan: new FormControl(''),
+        documents: new FormControl('')
       });
     }
+  }
+
+  onDocumentUpload(event: any) {
+    //do something
   }
 
   onSubmit() {
