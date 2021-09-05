@@ -70,6 +70,13 @@
                       cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
         </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Documents</mat-label>
+            <input matInput id="documents" formControlName="documents"
+            type="file" multiple (change)="onDocumentUpload($event)">
+          </mat-form-field>
+        </div>
       </div>
     </div>
     <div mat-dialog-actions align="end">
