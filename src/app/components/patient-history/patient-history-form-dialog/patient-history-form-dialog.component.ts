@@ -1,5 +1,4 @@
 import { User } from './../../../shared/models/user';
-import { VitalSigns, AttendingPhysician } from './../../../shared/models/patient';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -34,7 +33,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
     },
     treatmentPlan: '',
     labResults: '',
-    documents: ''
+    documents: []
   };
 
   constructor(
@@ -93,9 +92,12 @@ export class PatientHistoryFormDialogComponent implements OnInit {
     }
   }
 
-  onDocumentUpload(event: any) {
-    //do something
-  }
+  // onDocumentUpload(event: any) {
+  //   //do something
+  //   for (var i = 0; i < event.target.files.length; i++) {
+  //     this.myDocuments.push(event.target.files[i]);
+  //   }
+  // }
 
   onSubmit() {
     if (this.patientHistoryForm.valid) {
@@ -114,8 +116,15 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       }
       this.patientHistoryData.labResults = formGroupValues.labResults;
       this.patientHistoryData.treatmentPlan = formGroupValues.treatmentPlan;
+      this.patientHistoryData.documents = formGroupValues.documents;
 
       let result = JSON.parse(JSON.stringify(this.patientHistoryData));
+
+      console.log("patient history data----");
+      console.log(this.patientHistoryData);
+      console.log("result----");
+      console.log(result);
+
       this.dialogRef.close(result);
     }
   }

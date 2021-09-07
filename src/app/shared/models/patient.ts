@@ -20,7 +20,7 @@ export interface PatientHistory {
   vitalSigns?: VitalSigns;
   labResults?: string;
   treatmentPlan?: string;
-  documents?: string;
+  documents?: string[];
 }
 
 export interface Birthdate {
