@@ -1,0 +1,19 @@
+<input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+<div class="file-upload">
+  <!-- {{fileUpload.name || "No files."}} -->
+  <!-- <div *ngFor="let file of files">
+    <a href={{file.downloadableUrl}}>{{file.name}}</a>
+  </div> -->
+  <button mat-mini-fab color="primary" [disabled]="isActive" class="upload-btn" (click)="fileUpload.click()">
+    <mat-icon>attach_file</mat-icon>
+  </button>
+  <div *ngIf="percentage | async as pct">
+    {{currentFile.name}}
+    <progress [value]="pct" max="100"></progress>
+    {{ pct | number }}%
+  </div>
+</div>
+<!-- <div *ngIf="percentage | async as pct">
+  <progress [value]="pct" max="100"></progress>
+  {{ pct | number }}%
+</div> -->

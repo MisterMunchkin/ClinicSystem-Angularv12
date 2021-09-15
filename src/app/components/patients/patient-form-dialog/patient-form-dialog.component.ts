@@ -1,4 +1,3 @@
-import { Birthdate } from './../../../shared/models/patient';
 import { GenderDB } from './../../../shared/data/gender';
 import { CivilStatusDB } from './../../../shared/data/civil-status';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -6,7 +5,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Patient, PatientHistory } from 'src/app/shared/models/patient';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { validatebirthDay, validatebirthMonth, validatebirthYear } from 'src/app/shared/validators/birthday-validator';
-import { PatientService } from 'src/app/shared/services/patient/patient.service';
 
 
 @Component({
@@ -80,7 +78,6 @@ export class PatientFormDialogComponent implements OnInit {
       this.patientData.lastName = formGroupValues.lastName;
       this.patientData.middleName = formGroupValues.middleName;
 
-      console.log(this.patientData);
       this.dialogRef.close(this.patientData);
     }
   }

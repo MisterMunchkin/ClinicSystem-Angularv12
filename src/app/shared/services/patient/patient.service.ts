@@ -1,14 +1,15 @@
 import { Patient } from 'src/app/shared/models/patient';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
 
-  constructor(private fireStore: AngularFirestore) { }
+  constructor(
+    private fireStore: AngularFirestore) { }
 
   addPatientDocument(patientDocument: Patient): Promise<void> {
     const patientRef: AngularFirestoreDocument<Patient> = this.fireStore.collection(`patients`).doc();

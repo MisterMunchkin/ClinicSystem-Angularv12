@@ -1,3 +1,4 @@
+import { FireStoreFile } from './../../shared/models/file';
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +7,7 @@ import { MonthsDB } from 'src/app/shared/data/months';
 import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
 import { ToastrService } from 'ngx-toastr';
+import { FilesHelper } from 'src/app/shared/data/files';
 
 @Component({
   selector: 'app-patients',
@@ -16,7 +18,7 @@ export class PatientsComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<Patient>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'gender', 'birthdate', 'civilStatus', 'actions'];
+  displayedColumns = ['name', 'gender', 'birthdate', 'civilStatus', 'files', 'actions'];
   isLoading$: boolean;
   dataSource: MatTableDataSource<Patient>;
 
@@ -105,5 +107,31 @@ export class PatientsComponent implements AfterViewInit {
       });
       console.log(error);
     });
+  }
+
+
+  getFilePath(patientDocument: Patient) {
+    return FilesHelper.getPatientHistoryFilePath(patientDocument);
+  }
+
+  saveFireStoreFile(fireStoreFile: FireStoreFile, patient: Patient) {
+    if (!patient.documents) {
+      patient.documents = [];
+    }
+
+    patient.documents.push(fireStoreFile);
+    this.patientService.updatePatientDocument(patient)
+    .then(data => {
+      this.toastr.success('File uploaded!', 'Success', {
+        tapToDismiss: true,
+        easing: 'ease-in'
+      });
+    }, error => {
+      this.toastr.error('Something went wrong', 'Error', {
+        tapToDismiss: true,
+        easing: 'ease-in'
+      });
+      console.log(error);
+    })
   }
 }

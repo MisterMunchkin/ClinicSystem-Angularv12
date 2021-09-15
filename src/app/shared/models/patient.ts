@@ -1,3 +1,5 @@
+import { FireStoreFile } from "./file";
+
 export interface Patient {
   documentId: string;
   address: string;
@@ -8,6 +10,7 @@ export interface Patient {
   lastName: string;
   middleName?: string;
   patientHistory?: PatientHistory[];
+  documents?: FireStoreFile[];
 }
 
 export interface PatientHistory {
@@ -20,7 +23,6 @@ export interface PatientHistory {
   vitalSigns?: VitalSigns;
   labResults?: string;
   treatmentPlan?: string;
-  documents?: string[];
 }
 
 export interface Birthdate {
