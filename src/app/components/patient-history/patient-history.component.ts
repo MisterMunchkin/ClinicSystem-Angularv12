@@ -1,5 +1,5 @@
-import { PatientHistory } from 'src/app/shared/models/patient';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Patient, PatientHistory } from 'src/app/shared/models/patient';
+import { Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PatientHistoryFormDialogComponent } from './patient-history-form-dialog/patient-history-form-dialog.component';
 
@@ -10,6 +10,7 @@ import { PatientHistoryFormDialogComponent } from './patient-history-form-dialog
 })
 export class PatientHistoryComponent implements OnInit {
   @Input() patientHistoryCollection: PatientHistory[];
+  @Input() patientDocument: Patient;
 
   constructor(
     private dialog: MatDialog
@@ -46,5 +47,4 @@ export class PatientHistoryComponent implements OnInit {
       }
     });
   }
-
 }

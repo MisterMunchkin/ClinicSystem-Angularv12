@@ -32,9 +32,10 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       temperature: ''
     },
     treatmentPlan: '',
-    labResults: '',
-    documents: []
+    labResults: ''
   };
+
+  errors: Object[];
 
   constructor(
     public dialogRef: MatDialogRef<PatientHistoryFormDialogComponent>,
@@ -69,8 +70,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
         }),
         labResults: new FormControl(this.patientHistoryData.labResults),
-        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan),
-        documents: new FormControl(this.patientHistoryData.documents)
+        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan)
       });
     } else {
       //has no data for add
@@ -86,18 +86,10 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl('')
         }),
         labResults: new FormControl(''),
-        treatmentPlan: new FormControl(''),
-        documents: new FormControl('')
+        treatmentPlan: new FormControl('')
       });
     }
   }
-
-  // onDocumentUpload(event: any) {
-  //   //do something
-  //   for (var i = 0; i < event.target.files.length; i++) {
-  //     this.myDocuments.push(event.target.files[i]);
-  //   }
-  // }
 
   onSubmit() {
     if (this.patientHistoryForm.valid) {
@@ -116,14 +108,8 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       }
       this.patientHistoryData.labResults = formGroupValues.labResults;
       this.patientHistoryData.treatmentPlan = formGroupValues.treatmentPlan;
-      this.patientHistoryData.documents = formGroupValues.documents;
 
       let result = JSON.parse(JSON.stringify(this.patientHistoryData));
-
-      console.log("patient history data----");
-      console.log(this.patientHistoryData);
-      console.log("result----");
-      console.log(result);
 
       this.dialogRef.close(result);
     }
