@@ -121,7 +121,7 @@ export class PatientsComponent implements AfterViewInit {
 
     //remove the document from firestore
     const index = patient.documents?.findIndex(d => d.downloadableUrl === file.downloadableUrl);
-    if (index) {
+    if (index !== undefined) {
       patient.documents?.splice(index, 1);
       this.patientService.updatePatientDocument(patient)
       .then(data => {
