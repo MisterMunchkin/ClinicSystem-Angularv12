@@ -129,3 +129,8 @@ body{margin:0;font-family:Roboto, "Helvetica Neue", sans-serif;}
 .file-input {
   display: none;
 }
+
+.downloadable-link {
+  display: flex;
+  align-items: center;
+}
