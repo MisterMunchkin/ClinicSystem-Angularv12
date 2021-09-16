@@ -1,3 +1,4 @@
+import { FileUploadService } from './../../shared/services/file-upload/file-upload.service';
 import { FireStoreFile } from './../../shared/models/file';
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
@@ -25,7 +26,8 @@ export class PatientsComponent implements AfterViewInit {
   constructor(
     private patientService: PatientService,
     private dialog: MatDialog,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService,
+    private fileUpload: FileUploadService) {}
 
   ngAfterViewInit(): void {
     this.isLoading$ = true;
@@ -112,6 +114,31 @@ export class PatientsComponent implements AfterViewInit {
 
   getFilePath(patientDocument: Patient) {
     return FilesHelper.getPatientHistoryFilePath(patientDocument);
+  }
+
+  removeFile(file: FireStoreFile, patient: Patient) {
+    this.fileUpload.removeFile(file.downloadableUrl);
+
+    //remove the document from firestore
+    const index = patient.documents?.findIndex(d => d.downloadableUrl === file.downloadableUrl);
+    if (index) {
+      patient.documents?.splice(index, 1);
+      this.patientService.updatePatientDocument(patient)
+      .then(data => {
+        this.toastr.success(`File ${file.name} removed!`, 'Success', {
+          tapToDismiss: true,
+          easing: 'ease-in'
+        });
+      }, error => {
+        this.toastr.error('Something went wrong', 'Error', {
+          tapToDismiss: true,
+          easing: 'ease-in'
+        });
+        console.log(error);
+      });
+    } else {
+      console.log("Something went wrong. Could not find document from documents in patient object");
+    }
   }
 
   saveFireStoreFile(fireStoreFile: FireStoreFile, patient: Patient) {

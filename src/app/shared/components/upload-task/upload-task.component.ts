@@ -1,6 +1,6 @@
+import { FileUploadService } from './../../services/file-upload/file-upload.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
+import { AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { FireStoreFile } from '../../models/file';
@@ -21,7 +21,7 @@ export class UploadTaskComponent implements OnInit {
   currentFile: File;
   isActive: boolean = false;
 
-  constructor(private storage: AngularFireStorage) { }
+  constructor(private fileUpload: FileUploadService) { }
 
   ngOnInit(): void {
     //this.startUpload();
@@ -34,9 +34,9 @@ export class UploadTaskComponent implements OnInit {
 
     const fullPath = this.path + this.currentFile.name;
 
-    const ref = this.storage.ref(fullPath);
+    const ref = this.fileUpload.getStorageReference(fullPath);
 
-    this.task = this.storage.upload(fullPath, this.currentFile);
+    this.task = this.fileUpload.uploadFile(fullPath, this.currentFile);
 
     this.percentage = this.task.percentageChanges();
 

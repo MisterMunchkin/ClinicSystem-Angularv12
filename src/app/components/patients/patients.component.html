@@ -32,8 +32,11 @@
     <ng-container matColumnDef="files">
       <th mat-header-cell *matHeaderCellDef>Files</th>
       <td mat-cell *matCellDef="let row">
-        <div *ngFor="let url of row.documents">
-          <a href={{url.downloadableUrl}} target="_blank">{{url.name}}</a>
+        <div class="downloadable-link" *ngFor="let url of row.documents">
+          <a href={{url.downloadableUrl}} download>{{url.name}}</a>
+          <button mat-icon-button (click)="removeFile(url, row)">
+            <mat-icon [ngStyle]="{'color': 'red'}">delete</mat-icon>
+          </button>
         </div>
       </td>
     </ng-container>
