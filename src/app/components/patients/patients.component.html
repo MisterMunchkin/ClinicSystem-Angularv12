@@ -45,7 +45,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
       <td mat-cell *matCellDef="let row">
           <button class="inline" mat-raised-button color="accent" (click)="editPatientDialog(row)">Edit</button>
-          <app-upload-task class="inline" (emitResult)="saveFireStoreFile($event, row)" [path]="getFilePath(row)"></app-upload-task>
+          <app-upload-task class="inline" (emitResult)="saveFireStoreFile($event, row)" [path]="getFilePath(row)" [existingFilesInDirectory]="row.documents"></app-upload-task>
       </td>
     </ng-container>
 

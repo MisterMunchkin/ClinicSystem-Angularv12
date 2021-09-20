@@ -1,3 +1,4 @@
+import { ComponentHelper } from './../../shared/component-helper';
 import { FileUploadService } from './../../shared/services/file-upload/file-upload.service';
 import { FireStoreFile } from './../../shared/models/file';
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
@@ -141,24 +142,26 @@ export class PatientsComponent implements AfterViewInit {
     }
   }
 
-  saveFireStoreFile(fireStoreFile: FireStoreFile, patient: Patient) {
+  saveFireStoreFile(fireStoreFile: FireStoreFile | null, patient: Patient) {
     if (!patient.documents) {
       patient.documents = [];
     }
 
-    patient.documents.push(fireStoreFile);
-    this.patientService.updatePatientDocument(patient)
-    .then(data => {
-      this.toastr.success('File uploaded!', 'Success', {
-        tapToDismiss: true,
-        easing: 'ease-in'
+    if (fireStoreFile) {
+      patient.documents.push(fireStoreFile);
+      this.patientService.updatePatientDocument(patient)
+      .then(data => {
+        this.toastr.success('File uploaded!', 'Success', {
+          tapToDismiss: true,
+          easing: 'ease-in'
+        });
+      }, error => {
+        this.toastr.error('Something went wrong', 'Error', {
+          tapToDismiss: true,
+          easing: 'ease-in'
+        });
+        console.log(error);
       });
-    }, error => {
-      this.toastr.error('Something went wrong', 'Error', {
-        tapToDismiss: true,
-        easing: 'ease-in'
-      });
-      console.log(error);
-    })
+    }
   }
 }
