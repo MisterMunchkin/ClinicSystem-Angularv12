@@ -1,5 +1,4 @@
 import { User } from './../../../shared/models/user';
-import { VitalSigns, AttendingPhysician } from './../../../shared/models/patient';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -33,9 +32,10 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       temperature: ''
     },
     treatmentPlan: '',
-    labResults: '',
-    documents: ''
+    labResults: ''
   };
+
+  errors: Object[];
 
   constructor(
     public dialogRef: MatDialogRef<PatientHistoryFormDialogComponent>,
@@ -70,8 +70,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
         }),
         labResults: new FormControl(this.patientHistoryData.labResults),
-        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan),
-        documents: new FormControl(this.patientHistoryData.documents)
+        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan)
       });
     } else {
       //has no data for add
@@ -87,14 +86,9 @@ export class PatientHistoryFormDialogComponent implements OnInit {
           temperature: new FormControl('')
         }),
         labResults: new FormControl(''),
-        treatmentPlan: new FormControl(''),
-        documents: new FormControl('')
+        treatmentPlan: new FormControl('')
       });
     }
-  }
-
-  onDocumentUpload(event: any) {
-    //do something
   }
 
   onSubmit() {
@@ -116,6 +110,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       this.patientHistoryData.treatmentPlan = formGroupValues.treatmentPlan;
 
       let result = JSON.parse(JSON.stringify(this.patientHistoryData));
+
       this.dialogRef.close(result);
     }
   }

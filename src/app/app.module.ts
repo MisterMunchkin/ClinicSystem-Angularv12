@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -24,6 +25,7 @@ import { PatientFormDialogComponent } from './components/patients/patient-form-d
 import { PatientHistoryComponent } from './components/patient-history/patient-history.component';
 import { PatientHistoryFormDialogComponent } from './components/patient-history/patient-history-form-dialog/patient-history-form-dialog.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { UploadTaskComponent } from './shared/components/upload-task/upload-task.component';
 
 
 @NgModule({
@@ -35,13 +37,15 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     PatientsComponent,
     PatientFormDialogComponent,
     PatientHistoryComponent,
-    PatientHistoryFormDialogComponent
+    PatientHistoryFormDialogComponent,
+    UploadTaskComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     AppUiModule,
     ReactiveFormsModule,
