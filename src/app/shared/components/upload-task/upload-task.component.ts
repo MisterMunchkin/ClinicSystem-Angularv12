@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators';
 ///This component is a generic file uploader to Firebase storage
 ///It will upload to the storage based on your path and will verify if the
 ///File can be uploaded based on file size, file type, and if file name is
-///unique to its directory. After file upload, it will emit back a FireStoreFile object
+///unique to its directory, and also if directory did not reach hard limit of 5. After file upload, it will emit back a FireStoreFile object
 ///to the parent component. This will let you save the downloadableUrl and other meta data to firestore.
 @Component({
   selector: 'app-upload-task',
@@ -58,6 +58,12 @@ export class UploadTaskComponent implements OnInit {
 
     if (this.existingFilesInDirectory && this.existingFilesInDirectory.find(f => f.name === file.name)) {
       errorMessage += `- file with the same name already exists in the directory, please rename the file. <br />`;
+
+      isValid = false;
+    }
+
+    if (this.existingFilesInDirectory && this.existingFilesInDirectory.length >= FilesHelper.maximumFilesPerDirectory) {
+      errorMessage += `- Only 5 documents per directory can be stored. Please remove files from the directory to add new ones. <br />`;
 
       isValid = false;
     }
