@@ -26,7 +26,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     .then(app => {
       const uiConfig = {
         signInOptions: [
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          {
+            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
+          }
         ],
         callbacks: {
           signInSuccessWithAuthResult: this
@@ -37,6 +41,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
       this.ui = new firebaseui.auth.AuthUI(app.auth());
       this.ui.start('#firebaseui-auth-container', uiConfig);
+
       this.ui.disableAutoSignIn();
     });
   }
