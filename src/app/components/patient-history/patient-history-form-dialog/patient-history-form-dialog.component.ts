@@ -56,39 +56,20 @@ export class PatientHistoryFormDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.isEdit) {
-      //has data for edit
-      this.patientHistoryForm = new FormGroup({
-        age: new FormControl(this.patientHistoryData.age),
-        diagnosis: new FormControl(this.patientHistoryData.diagnosis, [Validators.required]),
-        remarks: new FormControl(this.patientHistoryData.remarks),
-        symptoms: new FormControl(this.patientHistoryData.symptoms, [Validators.required]),
-        vitalSigns: new FormGroup({
-          bloodPressure: new FormControl(this.patientHistoryData.vitalSigns?.bloodPressure),
-          pulseRate: new FormControl(this.patientHistoryData.vitalSigns?.pulseRate),
-          respirationRate: new FormControl(this.patientHistoryData.vitalSigns?.respirationRate),
-          temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
-        }),
-        labResults: new FormControl(this.patientHistoryData.labResults),
-        treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan)
-      });
-    } else {
-      //has no data for add
-      this.patientHistoryForm = new FormGroup({
-        age: new FormControl('', [Validators.required]),
-        diagnosis: new FormControl('', [Validators.required]),
-        remarks: new FormControl(''),
-        symptoms: new FormControl('', [Validators.required]),
-        vitalSigns: new FormGroup({
-          bloodPressure: new FormControl(''),
-          pulseRate: new FormControl(''),
-          respirationRate: new FormControl(''),
-          temperature: new FormControl('')
-        }),
-        labResults: new FormControl(''),
-        treatmentPlan: new FormControl('')
-      });
-    }
+    this.patientHistoryForm = new FormGroup({
+      age: new FormControl(this.patientHistoryData.age),
+      diagnosis: new FormControl(this.patientHistoryData.diagnosis, [Validators.required]),
+      remarks: new FormControl(this.patientHistoryData.remarks),
+      symptoms: new FormControl(this.patientHistoryData.symptoms, [Validators.required]),
+      vitalSigns: new FormGroup({
+        bloodPressure: new FormControl(this.patientHistoryData.vitalSigns?.bloodPressure),
+        pulseRate: new FormControl(this.patientHistoryData.vitalSigns?.pulseRate),
+        respirationRate: new FormControl(this.patientHistoryData.vitalSigns?.respirationRate),
+        temperature: new FormControl(this.patientHistoryData.vitalSigns?.temperature)
+      }),
+      labResults: new FormControl(this.patientHistoryData.labResults),
+      treatmentPlan: new FormControl(this.patientHistoryData.treatmentPlan)
+    });
   }
 
   onSubmit() {
