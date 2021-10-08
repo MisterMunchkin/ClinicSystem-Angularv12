@@ -33,7 +33,6 @@ export class PatientsComponent implements AfterViewInit {
     this.isLoading$ = true;
     this.patientService.getPatientCollections()
     .subscribe(data => {
-      console.log(data);
       this.dataSource = new MatTableDataSource(data);
       this.table.dataSource = this.dataSource;
       this.isLoading$ = false;
@@ -109,8 +108,8 @@ export class PatientsComponent implements AfterViewInit {
 
     //remove the document from firestore
     const index = patient.documents?.findIndex(d => d.downloadableUrl === file.downloadableUrl);
-    if (index !== undefined) {
-      patient.documents?.splice(index, 1);
+    if (index === undefined) {
+     // patient.documents?.splice(index, 1);
       this.patientService.updatePatientDocument(patient)
       .then(data => {
         this.toastr.successToastr(`File ${file.name} removed!`, 'Success');
@@ -119,7 +118,8 @@ export class PatientsComponent implements AfterViewInit {
         console.log(error);
       });
     } else {
-      console.log("Something went wrong. Could not find document from documents in patient object");
+      //this.toastr.errorToastr("Something went wrong. Could not find document from documents in patient object");
+      throw new Error('Something went wrong. Could not find document from documents in patient object')
     }
   }
 
