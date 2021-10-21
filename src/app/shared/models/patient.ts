@@ -1,3 +1,4 @@
+import { Clinic } from "./clinic";
 import { FireStoreFile } from "./file";
 
 export interface Patient {
@@ -11,6 +12,7 @@ export interface Patient {
   middleName?: string;
   patientHistory?: PatientHistory[];
   documents?: FireStoreFile[];
+  clinic: Clinic;
 }
 
 export interface PatientHistory {

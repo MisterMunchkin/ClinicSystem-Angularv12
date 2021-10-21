@@ -32,7 +32,8 @@ export class PatientFormDialogComponent implements OnInit {
     firstName: '',
     lastName: '',
     middleName: undefined,
-    patientHistory: []
+    patientHistory: [],
+    clinic: {id: '', address: '', name: ''}
   }
   isEdit: boolean = false;
 

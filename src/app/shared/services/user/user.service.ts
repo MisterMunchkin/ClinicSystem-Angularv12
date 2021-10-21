@@ -17,7 +17,7 @@ export class UserService {
     return userCollections.valueChanges();
   }
 
-  getUserDocument(uid: string) {
+  getUserDocument(uid: string): AngularFirestoreDocument<UserDocument> | null {
     const userDoc: AngularFirestoreDocument<UserDocument> = this.fireStore.doc(`users/${uid}`);
 
     if (userDoc) {
@@ -25,6 +25,13 @@ export class UserService {
     } else {
       return null;
     }
+  }
+
+  //If Observable is required for subscribing
+  getUserDocumentObservable(uid: string) : Observable<UserDocument | undefined> {
+    const userDoc: AngularFirestoreDocument<UserDocument> = this.fireStore.doc(`users/${uid}`);
+
+    return userDoc.valueChanges();
   }
 
   setUserDocument(user: User) {
