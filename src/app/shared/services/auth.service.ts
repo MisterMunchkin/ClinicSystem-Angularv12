@@ -30,10 +30,18 @@ export class AuthService {
         this.userData.photoURL = user.photoURL || '';
 
         localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user') || '{}');
+        //JSON.parse(localStorage.getItem('user') || '{}');
+
+        //Get UserDocument object from firestore
+        this.userService.getUserDocumentObservable(user.uid)
+        .subscribe(userDoc => {
+          localStorage.setItem('clinic', JSON.stringify(userDoc?.clinic || ''));
+        });
+
       } else {
         localStorage.setItem('user', '');
-        JSON.parse(localStorage.getItem('user') || '{}');
+        localStorage.setItem('clinic', '');
+        //JSON.parse(localStorage.getItem('user') || '{}');
       }
     })
   }
