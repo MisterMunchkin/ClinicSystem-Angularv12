@@ -1,4 +1,3 @@
-import { ComponentHelper } from './../../shared/component-helper';
 import { FileUploadService } from './../../shared/services/file-upload/file-upload.service';
 import { FireStoreFile } from './../../shared/models/file';
 import { PatientFormDialogComponent } from './patient-form-dialog/patient-form-dialog.component';
@@ -8,8 +7,8 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MonthsDB } from 'src/app/shared/data/months';
 import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
-import { ToastrService } from 'ngx-toastr';
 import { FilesHelper } from 'src/app/shared/data/files';
+import { ToastrHelperService } from 'src/app/shared/services/toastr/toastr-helper.service';
 
 @Component({
   selector: 'app-patients',
@@ -27,14 +26,13 @@ export class PatientsComponent implements AfterViewInit {
   constructor(
     private patientService: PatientService,
     private dialog: MatDialog,
-    private toastr: ToastrService,
+    private toastr: ToastrHelperService,
     private fileUpload: FileUploadService) {}
 
   ngAfterViewInit(): void {
     this.isLoading$ = true;
     this.patientService.getPatientCollections()
     .subscribe(data => {
-      console.log(data);
       this.dataSource = new MatTableDataSource(data);
       this.table.dataSource = this.dataSource;
       this.isLoading$ = false;
@@ -64,15 +62,9 @@ export class PatientsComponent implements AfterViewInit {
   addPatientDataService(patientData: Patient) {
     this.patientService.addPatientDocument(patientData)
     .then(data => {
-      this.toastr.success('New patient has been saved!', 'Success', {
-        tapToDismiss: true,
-        easing: 'ease-in'
-      });
+      this.toastr.successToastr('New patient has been saved!',  'Success');
     }, error => {
-      this.toastr.error('Something went wrong', 'Error', {
-        tapToDismiss: true,
-        easing: 'ease-in'
-      });
+      this.toastr.errorToastr();
       console.log(error);
     })
   }
@@ -99,15 +91,9 @@ export class PatientsComponent implements AfterViewInit {
   editPatientDataService(patientData: Patient) {
     this.patientService.updatePatientDocument(patientData)
     .then(data => {
-      this.toastr.success('Changes have been saved!', 'Success', {
-        tapToDismiss: true,
-        easing: 'ease-in'
-      });
+      this.toastr.successToastr('Changes have been saved!', 'Success');
     }, error => {
-      this.toastr.error('Something went wrong', 'Error', {
-        tapToDismiss: true,
-        easing: 'ease-in'
-      });
+      this.toastr.errorToastr();
       console.log(error);
     });
   }
@@ -122,23 +108,18 @@ export class PatientsComponent implements AfterViewInit {
 
     //remove the document from firestore
     const index = patient.documents?.findIndex(d => d.downloadableUrl === file.downloadableUrl);
-    if (index !== undefined) {
-      patient.documents?.splice(index, 1);
+    if (index === undefined) {
+     // patient.documents?.splice(index, 1);
       this.patientService.updatePatientDocument(patient)
       .then(data => {
-        this.toastr.success(`File ${file.name} removed!`, 'Success', {
-          tapToDismiss: true,
-          easing: 'ease-in'
-        });
+        this.toastr.successToastr(`File ${file.name} removed!`, 'Success');
       }, error => {
-        this.toastr.error('Something went wrong', 'Error', {
-          tapToDismiss: true,
-          easing: 'ease-in'
-        });
+        this.toastr.errorToastr();
         console.log(error);
       });
     } else {
-      console.log("Something went wrong. Could not find document from documents in patient object");
+      //this.toastr.errorToastr("Something went wrong. Could not find document from documents in patient object");
+      throw new Error('Something went wrong. Could not find document from documents in patient object')
     }
   }
 
@@ -151,15 +132,9 @@ export class PatientsComponent implements AfterViewInit {
       patient.documents.push(fireStoreFile);
       this.patientService.updatePatientDocument(patient)
       .then(data => {
-        this.toastr.success('File uploaded!', 'Success', {
-          tapToDismiss: true,
-          easing: 'ease-in'
-        });
+        this.toastr.successToastr('File uploaded!', 'Success');
       }, error => {
-        this.toastr.error('Something went wrong', 'Error', {
-          tapToDismiss: true,
-          easing: 'ease-in'
-        });
+        this.toastr.errorToastr();
         console.log(error);
       });
     }

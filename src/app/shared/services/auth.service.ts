@@ -3,6 +3,7 @@ import { User } from '../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user/user.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class AuthService {
   constructor(
     private fireAuth: AngularFireAuth,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
     fireAuth.onAuthStateChanged(user => {
       if (user) {
@@ -29,23 +31,29 @@ export class AuthService {
         this.userData.emailVerified = user.emailVerified;
         this.userData.photoURL = user.photoURL || '';
 
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user') || '{}');
+        this.cookieService.set('user', JSON.stringify(this.userData));
+
+        //Get UserDocument object from firestore
+        this.userService.getUserDocumentObservable(user.uid)
+        .subscribe(userDoc => {
+          this.cookieService.set('clinic', JSON.stringify(userDoc?.clinic || ''));
+        });
+
       } else {
-        localStorage.setItem('user', '');
-        JSON.parse(localStorage.getItem('user') || '{}');
+        this.cookieService.set('user', '');
+        this.cookieService.set('clinic', '');
       }
     })
   }
 
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = JSON.parse(this.cookieService.get('user') || '{}');
     return (Object.keys(user).length > 0) ? true : false;
   }
 
   isAdmin(): Promise<boolean> | undefined {
-    const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: User = JSON.parse(this.cookieService.get('user') || '{}');
 
     const userPromise = this.userService.getUserDocument(user.uid)?.get()?.toPromise();
 
@@ -56,7 +64,7 @@ export class AuthService {
   }
 
   isDoctor(): Promise<boolean> | undefined {
-    const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: User = JSON.parse(this.cookieService.get('user') || '{}');
 
     const userPromise = this.userService.getUserDocument(user.uid)?.get()?.toPromise();
 
@@ -69,7 +77,8 @@ export class AuthService {
   // Sign out
   async signOut() {
     return await this.fireAuth.signOut().then(() => {
-      localStorage.removeItem('user');
+      this.cookieService.delete('user');
+      this.cookieService.delete('clinic');
       this.router.navigate(['sign-in']);
     })
   }
