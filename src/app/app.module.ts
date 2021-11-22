@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { CookieService } from 'ngx-cookie-service';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -61,7 +62,8 @@ import { UploadTaskComponent } from './shared/components/upload-task/upload-task
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' }},
     ScreenTrackingService,
     UserTrackingService,
-    { provide: ErrorHandler, useClass: GlobalErrorHandler}
+    { provide: ErrorHandler, useClass: GlobalErrorHandler},
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

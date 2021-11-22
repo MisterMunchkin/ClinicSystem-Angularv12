@@ -1,18 +1,28 @@
+import { GlobalFirestoreService } from './../global.firestore.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserDocument, User } from '../../models/user';
+import { CookieService } from 'ngx-cookie-service';
+import { Clinic } from '../../models/clinic';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends GlobalFirestoreService {
   constructor(
-    private fireStore: AngularFirestore
-  ) { }
+    private fireStore: AngularFirestore,
+    private cookieService: CookieService
+  ) {
+    super();
+  }
 
   getUserCollections(): Observable<UserDocument[]> {
-    const userCollections: AngularFirestoreCollection<UserDocument> = this.fireStore.collection(`users`);
+    const clinic: Clinic = JSON.parse(this.cookieService.get('clinic'));
+
+    const userCollections: AngularFirestoreCollection<UserDocument> = this.fireStore.collection(`users`, ref => {
+      return this.clinicConstraint(ref, clinic.id);
+    });
 
     return userCollections.valueChanges();
   }

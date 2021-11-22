@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { PatientHistory } from 'src/app/shared/models/patient';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-patient-history-form-dialog',
@@ -39,14 +40,15 @@ export class PatientHistoryFormDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<PatientHistoryFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: PatientHistory
+    @Inject(MAT_DIALOG_DATA) public data: PatientHistory,
+    private cookieService: CookieService
   ) {
     if (data) {
       this.patientHistoryData = JSON.parse(JSON.stringify(data));
       this.isEdit = true;
     } else {
       this.patientHistoryData = this.cleanDataForm;
-      var user: User = JSON.parse(localStorage.getItem('user') ?? '');
+      var user: User = JSON.parse(this.cookieService.get('user') ?? '');
       this.patientHistoryData.attendingPhysician = {
         uid: user.uid,
         displayName: user.displayName ?? ''

@@ -6,6 +6,7 @@ import { Patient, PatientHistory } from 'src/app/shared/models/patient';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { validatebirthDay, validatebirthMonth, validatebirthYear } from 'src/app/shared/validators/birthday-validator';
 import { Clinic } from 'src/app/shared/models/clinic';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -40,13 +41,14 @@ export class PatientFormDialogComponent implements OnInit {
 
   constructor(
   public dialogRef: MatDialogRef<PatientFormDialogComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: Patient) {
+  @Inject(MAT_DIALOG_DATA) public data: Patient,
+  private cookieService: CookieService) {
     if (data) {
       this.patientData = JSON.parse(JSON.stringify(data));
       this.isEdit = true;
     } else {
       this.patientData = this.cleanDataForm;
-      var clinic: Clinic = JSON.parse(localStorage.getItem('clinic') ?? '');
+      var clinic: Clinic = JSON.parse(this.cookieService.get('clinic') ?? '');
       this.patientData.clinic = {
         id: clinic.id,
         address: clinic.address,
