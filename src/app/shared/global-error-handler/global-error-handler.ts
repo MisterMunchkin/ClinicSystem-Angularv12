@@ -12,5 +12,6 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     analytics.logEvent(`error: ${error.name}`, {message: error.message, stack: error.stack});
     toastr.errorToastr(error.message, error.name);
+    throw error;
   }
 }

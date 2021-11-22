@@ -1,4 +1,3 @@
-import { DocumentSnapshot } from '@angular/fire/firestore';
 import { Clinic } from './clinic';
 
 //Mainly used during authentication
