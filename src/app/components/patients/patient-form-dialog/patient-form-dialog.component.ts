@@ -35,7 +35,7 @@ export class PatientFormDialogComponent implements OnInit {
     lastName: '',
     middleName: undefined,
     patientHistory: [],
-    clinic: {id: '', address: '', name: ''}
+    clinic: {id: ''}
   }
   isEdit: boolean = false;
 
@@ -50,9 +50,7 @@ export class PatientFormDialogComponent implements OnInit {
       this.patientData = this.cleanDataForm;
       var clinic: Clinic = JSON.parse(this.cookieService.get('clinic') ?? '');
       this.patientData.clinic = {
-        id: clinic.id,
-        address: clinic.address,
-        name: clinic.name
+        id: clinic.id
       }
       this.isEdit = false;
     }
