@@ -9,6 +9,8 @@ import { Birthdate, Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient/patient.service';
 import { FilesHelper } from 'src/app/shared/data/files';
 import { ToastrHelperService } from 'src/app/shared/services/toastr/toastr-helper.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Clinic } from 'src/app/shared/models/clinic';
 
 @Component({
   selector: 'app-patients',
@@ -27,7 +29,8 @@ export class PatientsComponent implements AfterViewInit {
     private patientService: PatientService,
     private dialog: MatDialog,
     private toastr: ToastrHelperService,
-    private fileUpload: FileUploadService) {}
+    private fileUpload: FileUploadService,
+    private cookieService: CookieService) {}
 
   ngAfterViewInit(): void {
     this.isLoading$ = true;
@@ -38,7 +41,7 @@ export class PatientsComponent implements AfterViewInit {
       this.isLoading$ = false;
     }, error => {
       this.isLoading$ = false;
-      console.log(error);
+      this.toastr.errorToastr();
     })
   }
 
@@ -100,7 +103,12 @@ export class PatientsComponent implements AfterViewInit {
 
 
   getFilePath(patientDocument: Patient) {
-    return FilesHelper.getPatientHistoryFilePath(patientDocument);
+    var clinic: Clinic = JSON.parse(this.cookieService.get('clinic')) ?? null;
+    if (clinic) {
+      return FilesHelper.getPatientHistoryFilePath(patientDocument, clinic.id);
+    } else {
+      return '';
+    }
   }
 
   removeFile(file: FireStoreFile, patient: Patient) {
