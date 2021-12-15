@@ -1,3 +1,4 @@
+import { UserFormDialogComponent } from './components/users/user-form-dialog/user-form-dialog.component';
 import { GlobalErrorHandler } from './shared/global-error-handler/global-error-handler';
 import { ErrorHandler } from '@angular/core';
 import { NgModule } from '@angular/core';
@@ -38,6 +39,7 @@ import { UploadTaskComponent } from './shared/components/upload-task/upload-task
     SignInComponent,
     DashboardComponent,
     UsersComponent,
+    UserFormDialogComponent,
     PatientsComponent,
     PatientFormDialogComponent,
     PatientHistoryComponent,
