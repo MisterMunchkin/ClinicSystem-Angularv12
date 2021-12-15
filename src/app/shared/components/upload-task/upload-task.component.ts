@@ -79,12 +79,21 @@ export class UploadTaskComponent implements OnInit {
     return isValid;
   }
 
+  isPathValid(file: File, path: string) {
+    if (path !== '') {
+      return true;
+    } else {
+      this.toastr.error('Upload path is null, please try refreshing browser', `File Upload Error for ${file.name}`);
+      return false;
+    }
+  }
+
   onFileSelected($event: any) {
     console.log($event);
     this.isActive = true;
     this.currentFile = $event.target.files[0];
 
-    if (this.isFileValid(this.currentFile)) {
+    if (this.isFileValid(this.currentFile) && this.isPathValid(this.currentFile, this.path)) {
       this.uploadFile();
     } else {
       this.emitResult.emit(null);

@@ -17,5 +17,11 @@ export interface UserDocument {
   emailVerified: boolean;
   isAdmin: boolean;
   isDoctor: boolean;
-  clinic: Clinic;
+  clinic: UserClinic;
+}
+
+export interface UserClinic {
+  id: string,
+  address?: string,
+  name?: string
 }

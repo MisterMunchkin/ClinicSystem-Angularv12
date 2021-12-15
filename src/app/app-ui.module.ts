@@ -9,6 +9,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const uiModules = [
   MatSidenavModule,
@@ -20,7 +21,8 @@ const uiModules = [
   MatSortModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

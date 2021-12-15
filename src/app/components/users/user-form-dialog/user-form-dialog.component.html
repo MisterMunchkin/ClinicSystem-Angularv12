@@ -1,0 +1,26 @@
+<div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h1 mat-dialog-title>User Information</h1>
+    <div mat-dialog-content fxLayout="column">
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput id="email" formControlName="email" type="email">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-slide-toggle formControlName="isDoctor">Doctor</mat-slide-toggle>
+      </div>
+
+      <div>
+        <mat-slide-toggle formControlName="isAdmin">Admin</mat-slide-toggle>
+      </div>
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button color="primary" mat-raised-button type="submit">Save</button>
+      <button mat-raised-button [mat-dialog-close] type="button">Close</button>
+    </div>
+  </form>
+</div>

@@ -40,8 +40,8 @@ export class AuthService {
         });
 
       } else {
-        this.cookieService.set('user', '');
-        this.cookieService.set('clinic', '');
+        this.cookieService.delete('user');
+        this.cookieService.delete('clinic');
       }
     })
   }

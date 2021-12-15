@@ -1,6 +1,4 @@
-import { Clinic } from "../models/clinic";
-import { Patient, PatientHistory } from "../models/patient";
-
+import { Patient } from "../models/patient";
 export class FilesHelper {
   //max  file size is 5.24mb
   public static maximumFileSize = 5242880;
@@ -13,9 +11,12 @@ export class FilesHelper {
 
   //Stores the files in buckets of clinic id
   //organizes them by Patients/patient id
-  public static getPatientHistoryFilePath(patient: Patient){
-    const clinic: Clinic = JSON.parse(localStorage.getItem('clinic') ?? '');
-    return clinic.id + '/Patients/' + patient.documentId + '/';
+  public static getPatientHistoryFilePath(patient: Patient, clinicId: string){
+    if (clinicId !== '') {
+      return clinicId + '/Patients/' + patient.documentId + '/';
+    } else {
+      return '';
+    }
   }
 
   static changeDateStringFormat(date: string){
