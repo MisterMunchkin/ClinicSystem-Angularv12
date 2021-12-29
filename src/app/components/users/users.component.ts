@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { UsersDataSource } from './users-datasource';
 import { UserDocument } from '../../shared/models/user';
 import { UserService } from '../../shared/services/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormDialogComponent } from './user-form-dialog/user-form-dialog.component';
+import { ToastrHelperService } from 'src/app/shared/services/toastr/toastr-helper.service';
 
 @Component({
   selector: 'app-users',
@@ -22,6 +22,7 @@ export class UsersComponent implements AfterViewInit {
   displayedColumns = ['photo', 'email', 'displayName', 'role', 'actions'];
 
   constructor(private userService: UserService,
+    private toastr: ToastrHelperService,
     private dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
@@ -65,9 +66,9 @@ export class UsersComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed()
-    .subscribe(result => {
+    .subscribe((result: UserDocument) => {
       if (result) {
-        console.log(result);
+        this.updateUserDocument(result);
       }
     })
   }
@@ -86,5 +87,15 @@ export class UsersComponent implements AfterViewInit {
     }
 
     return role;
+  }
+
+  updateUserDocument(userDocument: UserDocument) {
+    this.userService.updateUserDocument(userDocument)
+    .then(data => {
+      this.toastr.successToastr('Changes have been saved!', 'Success');
+    }, error => {
+      this.toastr.errorToastr();
+      console.log(error);
+    })
   }
 }

@@ -57,4 +57,13 @@ export class UserService extends GlobalFirestoreService {
       merge: true
     })
   }
+
+  //Used in the User page for Editing isAdmin and isDoctor switches
+  updateUserDocument(user: UserDocument) {
+    return this.fireStore.doc(`users/${user.uid}`)
+    .update({
+      "isAdmin": user.isAdmin,
+      "isDoctor": user.isDoctor
+    });
+  }
 }

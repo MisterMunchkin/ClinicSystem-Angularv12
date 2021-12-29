@@ -46,8 +46,8 @@ export class UserFormDialogComponent implements OnInit {
   ngOnInit() {
     this.userForm = new FormGroup({
       email: new FormControl(this.userData.email, [Validators.required]),
-      isAdmin: new FormControl(this.userData.isAdmin, [Validators.required]),
-      isDoctor: new FormControl(this.userData.isDoctor, [Validators.required])
+      isAdmin: new FormControl(this.userData.isAdmin),
+      isDoctor: new FormControl(this.userData.isDoctor)
     });
 
     if (this.isEdit === true) {
