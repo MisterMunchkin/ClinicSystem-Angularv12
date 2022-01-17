@@ -52,10 +52,10 @@ export class UsersComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(UserFormDialogComponent, {});
 
     dialogRef.afterClosed()
-    .subscribe(result => {
+    .subscribe((result: UserDocument) => {
       if (result) {
         //save to user collection and send email for invite.
-        console.log(result);
+        this.userService.setUserDocument(result);
       }
     })
   }

@@ -1,4 +1,4 @@
-import { User } from './../../../shared/models/user';
+import { AuthUser } from './../../../shared/models/user';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -48,7 +48,7 @@ export class PatientHistoryFormDialogComponent implements OnInit {
       this.isEdit = true;
     } else {
       this.patientHistoryData = this.cleanDataForm;
-      var user: User = JSON.parse(this.cookieService.get('user') ?? '');
+      var user: AuthUser = JSON.parse(this.cookieService.get('user') ?? '');
       this.patientHistoryData.attendingPhysician = {
         uid: user.uid,
         displayName: user.displayName ?? ''

@@ -1,6 +1,6 @@
 import { UserService } from './../../shared/services/user/user.service';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/shared/models/user';
+import { AuthUser } from 'src/app/shared/models/user';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -16,9 +16,9 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const user: User = JSON.parse(this.cookieService.get('user') || '{}');
+    const user: AuthUser = JSON.parse(this.cookieService.get('user') || '{}');
 
-    this.userService.getUserDocumentObservable(user.uid).subscribe(userDoc => {
+    this.userService.getUserDocumentObservable(user.email).subscribe(userDoc => {
       console.log(userDoc);
     });
   }

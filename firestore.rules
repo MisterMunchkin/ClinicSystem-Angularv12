@@ -5,23 +5,18 @@ service cloud.firestore {
       allow read, write: if false;
     }
     //get request with user document
-    match /users/{userId} {
+    match /users/{email} {
     	//Allows users to read their own profile if they're signed in
-    	allow get: if isSignedIn() && belongsTo(userId);
+    	allow get: if isSignedIn() && belongsTo(email)
       allow list: if isSignedIn() && isAdmin();
-
-      //Only allows admins to update users
-    	allow update: if isSignedIn() && isAdmin();
 
       //allows users to create user object as long as they are signed in,
       //it is their uid, and it is not an isAdmin and isDoctor request
-      allow create: if isSignedIn() &&
-      belongsTo(userId) &&
-      !isAdminRequest(request.resource) &&
-      !isDoctorRequest(request.resource);
+      allow create: if isSignedIn()
 
-      //only allows admins to delete users
-      allow delete: if isSignedIn() && isAdmin();
+      //only allows admins to delete users and update users
+      //or if it is their document
+      allow delete, update: if isSignedIn() && (isAdmin() || belongsTo(email));
     }
 
     //Only Doctors are allowed to read and write to patients
@@ -36,24 +31,24 @@ service cloud.firestore {
 
     //checks if user that is making the request is an admin
     function isAdmin() {
-      return ("isAdmin" in get(/databases/$(database)/documents/users/$(request.auth.uid)).data) &&
-      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+      return ("isAdmin" in get(/databases/$(database)/documents/users/$(request.auth.token.email)).data) &&
+      get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.isAdmin == true;
     }
     //checks if user that is making the request is a doctor
     function isDoctor() {
-      return ("isDoctor" in get(/databases/$(database)/documents/users/$(request.auth.uid)).data) &&
-      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isDoctor == true;
+      return ("isDoctor" in get(/databases/$(database)/documents/users/$(request.auth.token.email)).data) &&
+      get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.isDoctor == true;
     }
-    function belongsTo(userId) {
-    	return request.auth.uid == userId
+    function belongsTo(email) {
+    	return request.auth.token.email == email
 		}
 
     //these functions checks if the request data has isAdmin or isDoctor properties.
-    function isAdminRequest(rsc) {
-    	return ("isAdmin" in rsc.data);
-    }
-    function isDoctorRequest(rsc) {
-    return ("isDoctor" in rsc.data);
-    }
+  //  function isAdminRequest(rsc) {
+  //  	return ("isAdmin" in rsc.data);
+  //  }
+  //  function isDoctorRequest(rsc) {
+  //  return ("isDoctor" in rsc.data);
+  //  }
   }
 }

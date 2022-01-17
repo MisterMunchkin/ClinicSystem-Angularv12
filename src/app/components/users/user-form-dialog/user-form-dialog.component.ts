@@ -15,14 +15,10 @@ export class UserFormDialogComponent implements OnInit {
   userData: UserDocument;
 
   cleanDataForm: UserDocument = {
-    uid: '',
     email: '',
-    displayName: '',
     isAdmin: false,
     isDoctor: false,
-    clinic: {id: ''},
-    photoURL: '',
-    emailVerified: false
+    clinic: {id: ''}
   }
   isEdit: boolean = false;
 

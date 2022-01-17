@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { AuthUser, UserDocument } from '../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user/user.service';
 import { CookieService } from 'ngx-cookie-service';
+import { DocumentSnapshot } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userData: User = {
+  userData: AuthUser = {
     uid: '',
     email: '',
     displayName: '',
@@ -24,7 +26,7 @@ export class AuthService {
     private cookieService: CookieService
   ) {
     fireAuth.onAuthStateChanged(user => {
-      if (user) {
+      if (user && user.email) {
         this.userData.uid = user.uid;
         this.userData.email = user.email || '';
         this.userData.displayName = user.displayName || '';
@@ -34,7 +36,7 @@ export class AuthService {
         this.cookieService.set('user', JSON.stringify(this.userData));
 
         //Get UserDocument object from firestore
-        this.userService.getUserDocumentObservable(user.uid)
+        this.userService.getUserDocumentObservable(user.email)
         .subscribe(userDoc => {
           this.cookieService.set('clinic', JSON.stringify(userDoc?.clinic || ''));
         });
@@ -53,9 +55,9 @@ export class AuthService {
   }
 
   isAdmin(): Promise<boolean> | undefined {
-    const user: User = JSON.parse(this.cookieService.get('user') || '{}');
+    const user: AuthUser = JSON.parse(this.cookieService.get('user') || '{}');
 
-    const userPromise = this.userService.getUserDocument(user.uid)?.get()?.toPromise();
+    const userPromise = this.userService.getUserDocument(user.email)?.get()?.toPromise();
 
     return userPromise?.then(user => {
       const data = user.data();
@@ -64,9 +66,9 @@ export class AuthService {
   }
 
   isDoctor(): Promise<boolean> | undefined {
-    const user: User = JSON.parse(this.cookieService.get('user') || '{}');
+    const user: AuthUser = JSON.parse(this.cookieService.get('user') || '{}');
 
-    const userPromise = this.userService.getUserDocument(user.uid)?.get()?.toPromise();
+    const userPromise = this.userService.getUserDocument(user.email)?.get()?.toPromise();
 
     return userPromise?.then(user => {
       const data = user.data();
@@ -83,7 +85,7 @@ export class AuthService {
     })
   }
 
-  onSignInSuccessful(user: User): void {
-    this.userService.setUserDocument(user);
+  onSignInSuccessful(user: AuthUser): Observable<UserDocument | undefined> {
+    return this.userService.setLoggedInUserDocument(user);
   }
 }

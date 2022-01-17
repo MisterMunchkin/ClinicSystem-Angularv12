@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import * as firebaseui from 'firebaseui';
+import { UserDocument } from 'src/app/shared/models/user';
 import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
@@ -51,10 +52,20 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   onSignInSuccessful(result: any) {
-    this.authService.onSignInSuccessful(result.user);
-    this.ngZone.run(() => {
-      this.router.navigate(['/dashboard']);
+    this.authService.onSignInSuccessful(result.user)
+    .subscribe((userDoc: UserDocument | undefined) => {
+      if (userDoc && userDoc.clinic?.id) {
+        //has a clinic and navigate to dashboard
+        this.ngZone.run(() => {
+          this.router.navigate(['/dashboard']);
+        });
+      } else if (userDoc && userDoc.clinic == null) {
+        //does not have a clinic, navigate to onboarding page
+        alert('No clinic');
+        this.router.navigate(['/sign-in'])
+      }
     });
+
     return false;
   }
 }

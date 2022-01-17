@@ -12,6 +12,6 @@ export class GlobalFirestoreService {
   clinicConstraint(ref: CollectionReference<DocumentData>, clinicId: string) {
     return  ref
     .where('clinic', '!=', null)
-    .where('clinic.id', '==', clinicId)
+    .where('clinic.id', '==', clinicId);
   }
 }
