@@ -62,7 +62,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       } else if (userDoc && userDoc.clinic == null) {
         //does not have a clinic, navigate to onboarding page
         alert('No clinic');
-        this.router.navigate(['/sign-in'])
+        this.router.navigate(['/clinic-onboarding'])
       }
     });
 

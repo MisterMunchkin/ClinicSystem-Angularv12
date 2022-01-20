@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClinicOnboardingComponent } from './clinic-onboarding/clinic-onboarding.component';
+import { ClinicOnboardingRoutingModule } from './clinic-onboarding-routing.module';
 
 
 
@@ -9,7 +10,8 @@ import { ClinicOnboardingComponent } from './clinic-onboarding/clinic-onboarding
     ClinicOnboardingComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ClinicOnboardingRoutingModule
   ]
 })
 export class ClinicOnboardingModule { }

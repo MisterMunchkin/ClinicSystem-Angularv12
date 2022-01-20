@@ -9,13 +9,17 @@ import { OnlyadminGuard } from '../app/shared/guard/onlyadmin/onlyadmin.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { UsersComponent } from './components/users/users.component';
+import { HasclinicGuard } from './shared/guard/hasclinic/hasclinic.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard, OnlyadminGuard]},
-  { path: 'patients', component: PatientsComponent, canActivate: [AuthGuard, OnlydoctorGuard]}
+  { path: 'clinic-onboarding',
+  loadChildren: () => import('./clinic-onboarding/clinic-onboarding.module').then(c => c.ClinicOnboardingModule),
+  canActivate: [AuthGuard]},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard, HasclinicGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard, HasclinicGuard, OnlyadminGuard]},
+  { path: 'patients', component: PatientsComponent, canActivate: [AuthGuard, HasclinicGuard, OnlydoctorGuard]}
 ];
 
 @NgModule({

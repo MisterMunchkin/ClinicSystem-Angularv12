@@ -1,3 +1,4 @@
+import { UserClinic } from './../models/user';
 import { Injectable } from '@angular/core';
 import { AuthUser, UserDocument } from '../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -46,6 +47,12 @@ export class AuthService {
         this.cookieService.delete('clinic');
       }
     })
+  }
+
+  //returns true if user has a clinic id
+  get hasClinic(): boolean {
+    const clinic: UserClinic = JSON.parse(this.cookieService.get('clinic') || '{}');
+    return (clinic.id) ? true : false;
   }
 
   // Returns true when user is looged in and email is verified
